@@ -16,7 +16,7 @@
   - Student ID: B09902004
   - Github: [ChenKB91](https://github.com/ChenKB91)
 
-### Approach
+### Our Approach
 
 ## Original Guide
 
