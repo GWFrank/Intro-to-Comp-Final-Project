@@ -1,9 +1,31 @@
 # Reversi Game Project
-### Prerequsite
+
+## Report
+
+### Team members
+- Team leader
+  - Name: Huai-Yuan Kuo
+  - Student ID: B09902004
+  - Github: [GWFrank](https://github.com/GWFrank)
+- Member
+  - Name: Jun-Wei Liu
+  - Student ID: B09902009
+  - Github: [Letuvertia](https://github.com/Letuvertia)
+- Member
+  - Name: Ko-Bang Chen
+  - Student ID: B09902004
+  - Github: [ChenKB91](https://github.com/ChenKB91)
+
+### Approach
+
+## Original Guide
+
+### Prerequisite
 ```
 $ pip install pygame
 $ pip install tqdm
 ```
+
 ### Repo structure
 ```
 .
@@ -22,7 +44,6 @@ $ pip install tqdm
 └── utils.py
 ```
 
-
 ### Usage
 ```
 $ git clone https://github.com/cwlin1998/reversi-pygame.git
@@ -31,25 +52,23 @@ $ python3 arena.py --time_limit=600000
 ```
 
 Now you can play with an AI
+
 ### Github tutorial 
 [Our slide](https://docs.google.com/presentation/d/1X0YmTyj4BNnG7E8saxtG-jH9XLWm8OiFG3L21HhgRwc/edit#slide=id.gacd295469b_2_15)
 
 ### Python tutorial
-
 [Our slide](https://docs.google.com/presentation/d/1pyyqS0QBvdS6jl4sLFFINce6fYdUXPpX9f47-3n6AME/edit?usp=sharing)
 
 ### Markdown tutorial
-
 [Our slide](https://docs.google.com/presentation/d/1BrGTMmXFdGQpRkhMQs3FPhjOsyPv-EwPOy3bguRlIbI/edit?usp=sharing)
-
-
 
 ###  Preparation for Team Project
 1. [Duplicate this repo](https://docs.github.com/en/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/duplicating-a-repository) and make it private.
 > Thanks to [GWFrank](https://github.com/GWFrank) providing the solution.
-2. Add your teamates and TA to your repo.
+2. Add your teammates and TA to your repo.
 3. Write your member name in your README.
 For example:
+   
     ### Team members
     - Team leader:
         - name: Cheng-Wei Lin
@@ -82,7 +101,7 @@ For example:
     $ python3 arena.py --agent1 cwlin1998.MyAgent --agent2 base_agent.RandomAgent
     ```
 - Write your report
-    
+  
     - Put your report in README.md. Learn how to write markdown
     
 - Work as a team and learn how to use github and read code :100: 
@@ -100,7 +119,7 @@ For example:
     - Main branch should be clean. No redundacy code and bug.
     - You will need to use git branch and learn how to use git rebase.
 - (**10 %**) All members should collaborate together and use pull request.
-    
+  
     - Disccus to each other.
 - (**10 %**) use git tag to do version control
     - For example: 
