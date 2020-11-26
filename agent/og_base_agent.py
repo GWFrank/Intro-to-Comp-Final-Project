@@ -64,16 +64,6 @@ class RandomAgent(BaseAgent):
         """
         return (self.col_offset + random.randint(0, self.cols_n-1) * self.block_len, self.row_offset + random.randint(0, self.rows_n-1) * self.block_len), pygame.USEREVENT
 
-class CabbageAgent(BaseAgent):
-    # what are you doing step function?
-    def step(self, reward, obs):
-        # Use Random Agent for the time being
-        return (self.col_offset + random.randint(0, self.cols_n-1) * self.block_len, self.row_offset + random.randint(0, self.rows_n-1) * self.block_len), pygame.USEREVENT
-    def getAvailableSpot(obs):
-        for y in range(8):
-            for x in range(8):
-                
-
 
 if __name__ == "__main__":
     agent = RandomAgent()

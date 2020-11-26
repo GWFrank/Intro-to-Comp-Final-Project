@@ -19,6 +19,7 @@
 ### Our Approach
 
 - Minimax
+  - Evaluation Method: ?????
 
 ### TODO
 
