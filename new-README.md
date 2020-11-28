@@ -13,7 +13,7 @@
   - Github: [Letuvertia](https://github.com/Letuvertia)
 - Member
   - Name: Ko-Bang Chen
-  - Student ID: B09902004
+  - Student ID: B09902011
   - Github: [ChenKB91](https://github.com/ChenKB91)
 
 ### Our Approach
