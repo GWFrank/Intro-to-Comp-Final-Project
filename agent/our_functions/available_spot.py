@@ -2,21 +2,26 @@ def getAvailableSpot(obs, color):
     """
     Parameters
     -----------
-    obs: dict 
-        board status
+    obs:    dict 
+            board status
 
-        key: int 0 ~ 63
-        value: [-1, 0 ,1]
-                -1 : black
-                0 : empty
-                1 : white
+            key: int 0 ~ 63
+            value: [-1, 0 ,1]
+                    -1 : black
+                    0 : empty
+                    1 : white
+    
+    color:  string
+            getting who's available spot
+
+            "black" or "white"
     
     Returns
     -----------
     list(tuple)
-    Each tuple represent cordinate of a available spot (x, y).
-    x : int 0 ~ 7
-    y : int 0 ~ 7
+            Each tuple represent cordinate of a available spot (x, y).
+            x : int 0 ~ 7
+            y : int 0 ~ 7
     """
     
     board = [obs[8*row:8*row+8] for row in range(8)]
