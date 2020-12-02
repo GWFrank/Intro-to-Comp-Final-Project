@@ -25,6 +25,7 @@ def makeMove(obs, move, color):
             2D array of the board
     """
     # board = [obs[8*row:8*row+8] for row in range(8)]
+    obs = obs.copy()
 
     empty = 0
     if color == "black":
