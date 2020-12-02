@@ -1,4 +1,4 @@
-def PositionalEval(obs):
+def positionalEval(obs):
     '''
     A simple sum of value for every tile.
     Should be good enough for testing.

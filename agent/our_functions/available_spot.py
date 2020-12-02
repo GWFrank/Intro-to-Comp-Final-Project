@@ -25,6 +25,7 @@ def getAvailableSpot(obs, color):
     """
     
     board = [obs[8*row:8*row+8] for row in range(8)]
+    print(board)
     empty = 0
     if color == "black":
         allie = -1
