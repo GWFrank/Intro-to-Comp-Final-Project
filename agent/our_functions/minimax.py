@@ -1,4 +1,3 @@
-from evalBoard import evalBoard
 def minimax(obs,color,depth):
     '''
     Find optimal position in the game.
