@@ -23,7 +23,7 @@ def minimax(obs,color,depth):
     if depth == 0:
         return None, evalBoard(obs)
 
-    moves = getAvailableSpot(obs, colorName[color])
+    moves = getAvailableSpot(obs, color)
     if color == 1:
         value = -float('inf')
         bestmove = None
@@ -33,7 +33,7 @@ def minimax(obs,color,depth):
                 value = newValue
             
         for move in moves:
-            newBoard = makeMove(obs, move, colorName[color])
+            newBoard = makeMove(obs, move, color)
             _ ,newValue = minimax(newBoard, -color, depth-1)
             if newValue > value:
                 value = newValue
@@ -46,7 +46,7 @@ def minimax(obs,color,depth):
             if newValue < value:
                 value = newValue
         for move in moves:
-            newBoard = makeMove(obs, move, colorName[color])
+            newBoard = makeMove(obs, move, color)
             _ ,newValue = minimax(newBoard, -color, depth-1)
             if newValue < value:
                 value = newValue

@@ -4,9 +4,6 @@ def makeMove(obs, move, color):
     -----------
     obs:    1D-list
             1D array of the board
-    
-    # board:  2D-list
-    #         2D array of the board
 
     move:   tuple
             where to place the piece (x, y)
@@ -14,10 +11,11 @@ def makeMove(obs, move, color):
             col x : 0 ~ 7   left -> right
             row y : 0 ~ 7   top  -> bottom
     
-    color:  string
-            getting who's available spot
+    color:  int
+            who's making a move
 
-            "black" or "white"
+            1  -> white
+            -1 -> black
 
     Returns
     -----------
@@ -28,52 +26,38 @@ def makeMove(obs, move, color):
     obs = obs.copy()
 
     empty = 0
-    if color == "black":
-        allie = -1
-        enemy = 1
-    elif color == "white":
-        allie = 1
-        enemy = -1
-    else:
-        raise ValueError
+    allie = color
+    enemy = -color
+    
 
     col, row = move
 
-    # def _flip(pos):
-    #     nonlocal obs
-    #     for p in pos:
-    #         obs[8*p[0] + p[1]] *= -1
-
     for horz in [-1, 0, 1]:
         for vert in [-1, 0, 1]:
-            if horz**2 + vert**2 > 0:
-                chk_row, chk_col = row+vert, col+horz
-                flipping_pos = []
+            # if horz != 0 or vert != 0:
+            chk_row, chk_col = row+vert, col+horz
+            flipping_pos = []
 
-                while (chk_row >= 0 and chk_col >= 0
-                        and chk_row < 8 and chk_col < 8):
-                    
-                    if obs[8*chk_row + chk_col] == enemy:
-                        flipping_pos.append((chk_row, chk_col))
-                    
-                    elif obs[8*chk_row + chk_col] == allie:
-                        if flipping_pos != []:
-                            # _flip(flipping_pos)
-                            for p in flipping_pos:
-                                obs[8*p[0] + p[1]] *= -1
-                            obs[8*row + col] = allie
-                        break
-                    
-                    elif obs[8*chk_row + chk_col] == empty:
-                        break
-                    
-                    else:
-                        raise ValueError
+            while (chk_row >= 0 and chk_col >= 0
+                    and chk_row < 8 and chk_col < 8):
+                
+                if obs[8*chk_row + chk_col] == enemy:
+                    flipping_pos.append(8*chk_row + chk_col)
+                
+                elif obs[8*chk_row + chk_col] == allie:
+                    if flipping_pos != []:
+                        for p in flipping_pos:
+                            obs[p] = allie
+                        obs[8*row + col] = allie
+                    break
+                
+                elif obs[8*chk_row + chk_col] == empty:
+                    break
 
-                    chk_row += vert
-                    chk_col += horz
-            else:
-                pass
+                chk_row += vert
+                chk_col += horz
+            # else:
+            #     pass
     
     return obs
 
@@ -87,7 +71,7 @@ if __name__ == "__main__":
                    0, -1,  0,  0, -1,  0,  0,  0,
                    0,  0,  0,  0,  0,  0,  0,  0 ]
 
-    test = makeMove(test_board, (1, 3), "black")
+    test = makeMove(test_board, (1, 3), -1)
     for i in range(8):
         for j in range(8):
             print(f"{test[8*i + j]:2}", end=" ")

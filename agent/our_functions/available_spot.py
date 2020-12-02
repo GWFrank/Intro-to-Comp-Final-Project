@@ -4,13 +4,12 @@ def getAvailableSpot(obs, color):
     -----------
     obs:    1D-list
             1D array of the board
-    # board:  2D-list
-    #        2D array of the board
     
-    color:  string
+    color:  int
             getting who's available spot
 
-            "black" or "white"
+            1  -> white
+            -1 -> black
     
     Returns
     -----------
@@ -21,40 +20,12 @@ def getAvailableSpot(obs, color):
     """
     
     # board = [obs[8*row:8*row+8] for row in range(8)]
-    # print(board)
-    empty = 0
-    if color == "black":
-        allie = -1
-        enemy = 1
-    elif color == "white":
-        allie = 1
-        enemy = -1
-    else:
-        raise ValueError
     
-
+    empty = 0
+    allie = color
+    enemy = -color
+    
     available_spot = []
-
-    # def chk_atk(horz, vert, row, col):
-    #     nonlocal available_spot, allie, enemy, empty
-        
-    #     can_attack = False
-    #     chk_row, chk_col = row+vert, col+horz
-    #     while (chk_row >= 0 and chk_col >= 0
-    #             and chk_row < 8 and chk_col < 8):
-    #         if obs[8*chk_row + chk_col] == enemy:
-    #             can_attack = True
-    #         elif obs[8*chk_row + chk_col] == allie:
-    #             break
-    #         elif obs[8*chk_row + chk_col] == empty:
-    #             if can_attack:
-    #                 available_spot.append((chk_col, chk_row))
-    #             break
-    #         else:
-    #             raise ValueError
-
-    #         chk_row += vert
-    #         chk_col += horz
 
     for row in range(8):
         for col in range(8):
@@ -62,28 +33,24 @@ def getAvailableSpot(obs, color):
             if piece == allie:
                 for i in [-1, 0, 1]:
                     for j in [-1, 0, 1]:
-                        if i**2+j**2 > 0:
-                            # chk_atk(i, j, row, col)
-
-                            can_attack = False
-                            chk_row, chk_col = row+j, col+i
-                            while (chk_row >= 0 and chk_col >= 0
-                                    and chk_row < 8 and chk_col < 8):
-                                if obs[8*chk_row + chk_col] == enemy:
-                                    can_attack = True
-                                elif obs[8*chk_row + chk_col] == allie:
-                                    break
-                                elif obs[8*chk_row + chk_col] == empty:
-                                    if can_attack:
-                                        available_spot.append((chk_col, chk_row))
-                                    break
-                                else:
-                                    raise ValueError
-
-                                chk_row += j
-                                chk_col += i
-                        else:
-                            continue
+                        # if i != 0 or j != 0:
+                        # original chk_atk()
+                        can_attack = False
+                        chk_row, chk_col = row+j, col+i
+                        while (chk_row >= 0 and chk_col >= 0
+                                and chk_row < 8 and chk_col < 8):
+                            if obs[8*chk_row + chk_col] == enemy:
+                                can_attack = True
+                            elif obs[8*chk_row + chk_col] == allie:
+                                break
+                            elif obs[8*chk_row + chk_col] == empty:
+                                if can_attack:
+                                    available_spot.append((chk_col, chk_row))
+                                break
+                            chk_row += j
+                            chk_col += i
+                        # else:
+                        #     continue
 
     return available_spot
 
@@ -106,7 +73,7 @@ if __name__ == "__main__":
     #                0,  0,  1,  1,  1,  1,  1,  0,
     #                0,  0,  1,  0,  1, -1, -1,  1 ]
 
-    test = getAvailableSpot(test_board, "white")
+    test = getAvailableSpot(test_board, 1)
     for i in range(8):
         for j in range(8):
             if (j, i) in test:

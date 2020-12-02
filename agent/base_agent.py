@@ -2,7 +2,7 @@ import random
 import pygame
 import sys
 from pygame.constants import MOUSEBUTTONDOWN, MOUSEMOTION
-import minimax
+from our_functions.minimax import minimax
 
 class BaseAgent():
     def __init__(self, color = "black", rows_n = 8, cols_n = 8, width = 600, height = 600):
