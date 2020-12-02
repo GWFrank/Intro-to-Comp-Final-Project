@@ -39,10 +39,10 @@ def makeMove(obs, move, color):
 
     col, row = move
 
-    def _flip(pos):
-        nonlocal obs
-        for p in pos:
-            obs[8*p[0] + p[1]] *= -1
+    # def _flip(pos):
+    #     nonlocal obs
+    #     for p in pos:
+    #         obs[8*p[0] + p[1]] *= -1
 
     for horz in [-1, 0, 1]:
         for vert in [-1, 0, 1]:
@@ -52,15 +52,21 @@ def makeMove(obs, move, color):
 
                 while (chk_row >= 0 and chk_col >= 0
                         and chk_row < 8 and chk_col < 8):
+                    
                     if obs[8*chk_row + chk_col] == enemy:
                         flipping_pos.append((chk_row, chk_col))
+                    
                     elif obs[8*chk_row + chk_col] == allie:
                         if flipping_pos != []:
-                            _flip(flipping_pos)
+                            # _flip(flipping_pos)
+                            for p in flipping_pos:
+                                obs[8*p[0] + p[1]] *= -1
                             obs[8*row + col] = allie
                         break
+                    
                     elif obs[8*chk_row + chk_col] == empty:
                         break
+                    
                     else:
                         raise ValueError
 
