@@ -1,15 +1,9 @@
-def getAvailableSpot(obs, color):
+def getAvailableSpot(board, color):
     """
     Parameters
     -----------
-    obs:    dict 
-            board status
-
-            key: int 0 ~ 63
-            value: [-1, 0 ,1]
-                    -1 : black
-                    0 : empty
-                    1 : white
+    board:  2D-list
+            2D array of the board
     
     color:  string
             getting who's available spot
@@ -24,8 +18,8 @@ def getAvailableSpot(obs, color):
             y : int 0 ~ 7
     """
     
-    board = [obs[8*row:8*row+8] for row in range(8)]
-    print(board)
+    # board = [obs[8*row:8*row+8] for row in range(8)]
+    # print(board)
     empty = 0
     if color == "black":
         allie = -1
@@ -74,14 +68,14 @@ def getAvailableSpot(obs, color):
     return available_spot
 
 if __name__ == "__main__":
-    test_board = [ 0,  0,  0,  0,  0,  0,  0,  0,
-                   0,  0,  0,  0,  0,  0,  0,  0,
-                   0, -1, -1, -1, -1, -1,  0,  0,
-                   0, -1,  1,  1,  1, -1,  0,  0,
-                   0, -1,  1, -1,  1, -1,  0,  0,
-                   0, -1,  1,  1,  1, -1,  0,  0,
-                   0, -1, -1, -1, -1, -1,  0,  0,
-                   0,  0,  0,  0,  0,  0,  0,  0 ]
+    test_board = [ [0,  0,  0,  0,  0,  0,  0,  0],
+                   [0,  0,  0,  0,  0,  0,  0,  0],
+                   [0, -1, -1, -1, -1, -1,  0,  0],
+                   [0, -1,  1,  1,  1, -1,  0,  0],
+                   [0, -1,  1, -1,  1, -1,  0,  0],
+                   [0, -1,  1,  1,  1, -1,  0,  0],
+                   [0, -1, -1, -1, -1, -1,  0,  0],
+                   [0,  0,  0,  0,  0,  0,  0,  0] ]
 
     test = getAvailableSpot(test_board, "black")
     for i in range(8):

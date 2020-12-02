@@ -1,15 +1,9 @@
-def makeMove(obs, move, color):
+def makeMove(board, move, color):
     """
     Parameters
     -----------
-    obs:    dict 
-            board status
-
-            key: int 0 ~ 63
-            value: [-1, 0 ,1]
-                    -1 : black
-                    0 : empty
-                    1 : white
+    board:  2D-list
+            2D array of the board
 
     move:   tuple
             where to place the piece (x, y)
@@ -27,7 +21,8 @@ def makeMove(obs, move, color):
     list(list)
             2D array of the board
     """
-    board = [obs[8*row:8*row+8] for row in range(8)]
+    # board = [obs[8*row:8*row+8] for row in range(8)]
+
     empty = 0
     if color == "black":
         allie = -1
@@ -73,14 +68,14 @@ def makeMove(obs, move, color):
     return board
 
 if __name__ == "__main__":
-    test_board = [ 0,  0,  0,  0,  0,  0,  0,  0,
-                   0,  0,  0, -1,  0,  0,  0,  0,
-                   0,  0,  1,  0,  0,  0,  0,  0,
-                   0,  0,  1,  1,  1, -1,  0,  0,
-                   0,  1,  1,  1,  1,  0,  0,  0,
-                   0,  1,  1,  1,  1,  0,  0,  0,
-                   0, -1,  0,  0, -1,  0,  0,  0,
-                   0,  0,  0,  0,  0,  0,  0,  0 ]
+    test_board = [ [0,  0,  0,  0,  0,  0,  0,  0],
+                   [0,  0,  0, -1,  0,  0,  0,  0],
+                   [0,  0,  1,  0,  0,  0,  0,  0],
+                   [0,  0,  1,  1,  1, -1,  0,  0],
+                   [0,  1,  1,  1,  1,  0,  0,  0],
+                   [0,  1,  1,  1,  1,  0,  0,  0],
+                   [0, -1,  0,  0, -1,  0,  0,  0],
+                   [0,  0,  0,  0,  0,  0,  0,  0] ]
 
     test = makeMove(test_board, (1, 3), "black")
     for i in range(8):
