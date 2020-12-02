@@ -1,9 +1,11 @@
-def getAvailableSpot(board, color):
+def getAvailableSpot(obs, color):
     """
     Parameters
     -----------
-    board:  2D-list
-            2D array of the board
+    obs:    1D-list
+            1D array of the board
+    # board:  2D-list
+    #        2D array of the board
     
     color:  string
             getting who's available spot
@@ -40,11 +42,11 @@ def getAvailableSpot(board, color):
         chk_row, chk_col = row+vert, col+horz
         while (chk_row >= 0 and chk_col >= 0
                 and chk_row < 8 and chk_col < 8):
-            if board[chk_row][chk_col] == enemy:
+            if obs[8*chk_row + chk_col] == enemy:
                 can_attack = True
-            elif board[chk_row][chk_col] == allie:
+            elif obs[8*chk_row + chk_col] == allie:
                 break
-            elif board[chk_row][chk_col] == empty:
+            elif obs[8*chk_row + chk_col] == empty:
                 if can_attack:
                     available_spot.append((chk_col, chk_row))
                 break
@@ -56,7 +58,7 @@ def getAvailableSpot(board, color):
 
     for row in range(8):
         for col in range(8):
-            piece = board[row][col]
+            piece = obs[8*row + col]
             if piece == allie:
                 for i in [-1, 0, 1]:
                     for j in [-1, 0, 1]:
@@ -68,16 +70,25 @@ def getAvailableSpot(board, color):
     return available_spot
 
 if __name__ == "__main__":
-    test_board = [ [0,  0,  0,  0,  0,  0,  0,  0],
-                   [0,  0,  0,  0,  0,  0,  0,  0],
-                   [0, -1, -1, -1, -1, -1,  0,  0],
-                   [0, -1,  1,  1,  1, -1,  0,  0],
-                   [0, -1,  1, -1,  1, -1,  0,  0],
-                   [0, -1,  1,  1,  1, -1,  0,  0],
-                   [0, -1, -1, -1, -1, -1,  0,  0],
-                   [0,  0,  0,  0,  0,  0,  0,  0] ]
+    test_board = [ 0,  0,  0,  0,  0,  0,  0,  0,
+                   0,  0,  0,  0,  0,  0,  0,  0,
+                   0, -1, -1, -1, -1, -1,  0,  0,
+                   0, -1,  1,  1,  1, -1,  0,  0,
+                   0, -1,  1, -1,  1, -1,  0,  0,
+                   0, -1,  1,  1,  1, -1,  0,  0,
+                   0, -1, -1, -1, -1, -1,  0,  0,
+                   0,  0,  0,  0,  0,  0,  0,  0 ]
+    
+    # test_board = [ 0,  0,  0,  0,  0,  0,  0,  0,
+    #                0,  0,  0,  0,  0,  0,  0,  0,
+    #                0,  0,  0,  0,  0,  0,  0,  0,
+    #                0,  0,  0,  0,  0,  0,  0,  0,
+    #                0,  0,  0,  0,  0,  0,  1,  1,
+    #                0,  0,  0,  0,  0,  0,  1, -1,
+    #                0,  0,  1,  1,  1,  1,  1,  0,
+    #                0,  0,  1,  0,  1, -1, -1,  1 ]
 
-    test = getAvailableSpot(test_board, "black")
+    test = getAvailableSpot(test_board, "white")
     for i in range(8):
         for j in range(8):
             if (j, i) in test:
