@@ -35,26 +35,26 @@ def getAvailableSpot(obs, color):
 
     available_spot = []
 
-    def chk_atk(horz, vert, row, col):
-        nonlocal available_spot, allie, enemy, empty
+    # def chk_atk(horz, vert, row, col):
+    #     nonlocal available_spot, allie, enemy, empty
         
-        can_attack = False
-        chk_row, chk_col = row+vert, col+horz
-        while (chk_row >= 0 and chk_col >= 0
-                and chk_row < 8 and chk_col < 8):
-            if obs[8*chk_row + chk_col] == enemy:
-                can_attack = True
-            elif obs[8*chk_row + chk_col] == allie:
-                break
-            elif obs[8*chk_row + chk_col] == empty:
-                if can_attack:
-                    available_spot.append((chk_col, chk_row))
-                break
-            else:
-                raise ValueError
+    #     can_attack = False
+    #     chk_row, chk_col = row+vert, col+horz
+    #     while (chk_row >= 0 and chk_col >= 0
+    #             and chk_row < 8 and chk_col < 8):
+    #         if obs[8*chk_row + chk_col] == enemy:
+    #             can_attack = True
+    #         elif obs[8*chk_row + chk_col] == allie:
+    #             break
+    #         elif obs[8*chk_row + chk_col] == empty:
+    #             if can_attack:
+    #                 available_spot.append((chk_col, chk_row))
+    #             break
+    #         else:
+    #             raise ValueError
 
-            chk_row += vert
-            chk_col += horz
+    #         chk_row += vert
+    #         chk_col += horz
 
     for row in range(8):
         for col in range(8):
@@ -63,9 +63,27 @@ def getAvailableSpot(obs, color):
                 for i in [-1, 0, 1]:
                     for j in [-1, 0, 1]:
                         if i**2+j**2 > 0:
-                            chk_atk(i, j, row, col)    
-            else:
-                continue
+                            # chk_atk(i, j, row, col)
+
+                            can_attack = False
+                            chk_row, chk_col = row+j, col+i
+                            while (chk_row >= 0 and chk_col >= 0
+                                    and chk_row < 8 and chk_col < 8):
+                                if obs[8*chk_row + chk_col] == enemy:
+                                    can_attack = True
+                                elif obs[8*chk_row + chk_col] == allie:
+                                    break
+                                elif obs[8*chk_row + chk_col] == empty:
+                                    if can_attack:
+                                        available_spot.append((chk_col, chk_row))
+                                    break
+                                else:
+                                    raise ValueError
+
+                                chk_row += j
+                                chk_col += i
+                        else:
+                            continue
 
     return available_spot
 
