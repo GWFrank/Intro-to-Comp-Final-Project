@@ -3,6 +3,7 @@ from make_move import makeMove
 from available_spot import getAvailableSpot
 evalBoard = positionalEval
 colorName = {1:'white', -1:'black'}
+
 def minimax(obs,color,depth):
     '''
     Find optimal position in the game.
@@ -26,6 +27,11 @@ def minimax(obs,color,depth):
     if color == 1:
         value = -float('inf')
         bestmove = None
+        if len(moves) == 0: # no move, proceed to other player
+            _ ,newValue = minimax(obs, -color, depth-1)
+            if newValue > value:
+                value = newValue
+            
         for move in moves:
             newBoard = makeMove(obs, move, colorName[color])
             _ ,newValue = minimax(newBoard, -color, depth-1)
@@ -35,6 +41,10 @@ def minimax(obs,color,depth):
     else:
         value = float('inf')
         bestmove = None
+        if len(moves) == 0:
+            _, newValue = minimax(obs, -color, depth-1)
+            if newValue < value:
+                value = newValue
         for move in moves:
             newBoard = makeMove(obs, move, colorName[color])
             _ ,newValue = minimax(newBoard, -color, depth-1)

@@ -68,7 +68,8 @@ class RandomAgent(BaseAgent):
 class myAgent(BaseAgent):
     # what are you doing step function?
     def step(self, reward, obs):
-        pass
+        board = [obs[8*row:8*row+8] for row in range(8)]
+        
     
                 
 
