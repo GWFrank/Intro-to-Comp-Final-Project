@@ -2,7 +2,6 @@ import random
 import pygame
 import sys
 from pygame.constants import MOUSEBUTTONDOWN, MOUSEMOTION
-from our_functions.minimax import minimax
 
 class BaseAgent():
     def __init__(self, color = "black", rows_n = 8, cols_n = 8, width = 600, height = 600):
@@ -64,14 +63,6 @@ class RandomAgent(BaseAgent):
         """
         """
         return (self.col_offset + random.randint(0, self.cols_n-1) * self.block_len, self.row_offset + random.randint(0, self.rows_n-1) * self.block_len), pygame.USEREVENT
-
-class myAgent(BaseAgent):
-    # what are you doing step function?
-    def step(self, reward, obs):
-        board = [obs[8*row:8*row+8] for row in range(8)]
-        
-    
-                
 
 
 if __name__ == "__main__":

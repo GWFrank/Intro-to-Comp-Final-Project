@@ -1,7 +1,9 @@
-from minimax import minimax
-from make_move import makeMove
+import numpy as np
 import time # timer
-# from available_spot
+
+from agent.our_functions.minimax import minimax
+from agent.our_functions.make_move import makeMove
+
 def printBoard(obs):
     for i in range(8):
         for j in range(8):
@@ -22,6 +24,8 @@ board = [0,  0,  0,  0,  0,  0,  0,  0,
          0,  0,  0,  0,  0,  0,  0,  0,
          0,  0,  0,  0,  0,  0,  0,  0]
 
+# board = np.array(board)
+
 color = -1
 nomovecount = 0
 colorName = {1: 'white', -1: 'black'}
@@ -39,5 +43,4 @@ while nomovecount <=2:
     color = -color
     
 end = time.time() # timer
-print(f" {end-start:.3f}s") # timer
-
+print(f"a game takes {end-start:.3f}s") # timer

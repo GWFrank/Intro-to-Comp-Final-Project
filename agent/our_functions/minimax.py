@@ -1,10 +1,15 @@
-from eval_funcs import positionalEval
-from make_move import makeMove
-from available_spot import getAvailableSpot
+# from eval_funcs import positionalEval
+# from make_move import makeMove
+# from available_spot import getAvailableSpot
+
+from .eval_funcs import positionalEval
+from .make_move import makeMove
+from .available_spot import getAvailableSpot
+
 evalBoard = positionalEval
 colorName = {1:'white', -1:'black'}
 
-def minimax(obs,color,depth):
+def minimax(obs, color, depth):
     '''
     Find optimal position in the game.
 
