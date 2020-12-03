@@ -17,6 +17,11 @@ def positionalEval(obs):
     s = 0
     for i in range(8):
         for j in range(8):
+            # I'll leave this here just in case if we need this
+            # if obs[i*8+j] == 1:
+            #     s += valueMap[i][j]
+            # elif obs[i*8+j] == -1:
+            #     s -= valueMap[i][j]
             s += valueMap[i][j] * obs[i*8+j]
     return s
 
