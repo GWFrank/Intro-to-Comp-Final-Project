@@ -2,11 +2,11 @@
 # from make_move import makeMove
 # from available_spot import getAvailableSpot
 
-from .eval_funcs import positionalEval
+from .eval_funcs import positionalEval2
 from .make_move import makeMove
 from .available_spot import getAvailableSpot
 
-evalBoard = positionalEval
+evalBoard = positionalEval2
 
 def minimax(obs, color, depth):
     '''
