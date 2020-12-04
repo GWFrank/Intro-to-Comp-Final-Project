@@ -31,7 +31,7 @@ nomovecount = 0
 colorName = {1: 'white', -1: 'black'}
 start = time.time() # timer
 while nomovecount <=2:
-    move, value = minimax(board, color, 4)
+    move, value = minimax(board, color, 4, -float('inf'), float('inf'))
     print(move)
     print(value)
     if move:

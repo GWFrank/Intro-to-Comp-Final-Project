@@ -59,7 +59,7 @@ class MyAgent(BaseAgent):
         else:
             c = 1
         
-        mv, _ = minimax(obs, c, 4)
+        mv, _ = minimax(obs, c, 4, -float('inf'), float('inf'))
 
         x = self.col_offset + mv[0]*self.block_len
         y = self.row_offset + mv[1]*self.block_len

@@ -2,13 +2,13 @@
 # from make_move import makeMove
 # from available_spot import getAvailableSpot
 
-from .eval_funcs import positionalEval2
+from .eval_funcs import positionalEval
 from .make_move import makeMove
 from .available_spot import getAvailableSpot
 
-evalBoard = positionalEval2
+evalBoard = positionalEval
 
-def minimax(obs, color, depth):
+def minimax(obs, color, depth, alpha, beta):
     '''
     Find optimal position in the game.
 
@@ -16,6 +16,9 @@ def minimax(obs, color, depth):
       obs: 1d list, current board. white = 1, black = -1, empty = 0
       color: int, player color. same as obs
       depth: int, layers to search through.
+      alpha: -infinity when starts, we'll work our way up
+      beta: infinity when starts, we'll work our way down
+
       evalBoard: function that takes a board to evaluate, returns an integer. 
                  larger value if white is more likely to win, vise versa.
 
@@ -32,28 +35,33 @@ def minimax(obs, color, depth):
         value = -float('inf')
         bestmove = None
         if len(moves) == 0: # no move, proceed to other player
-            _ ,newValue = minimax(obs, -color, depth-1)
+            _ ,newValue = minimax(obs, -color, depth-1, alpha, beta)
             if newValue > value:
                 value = newValue
-            
         for move in moves:
             newBoard = makeMove(obs, move, color)
-            _ ,newValue = minimax(newBoard, -color, depth-1)
+            _ ,newValue = minimax(newBoard, -color, depth-1, alpha, beta)
             if newValue > value:
                 value = newValue
                 bestmove = move
+            alpha = max(alpha, value)
+            if beta <= alpha:
+                break
+
     else:
         value = float('inf')
         bestmove = None
         if len(moves) == 0:
-            _, newValue = minimax(obs, -color, depth-1)
+            _, newValue = minimax(obs, -color, depth-1, alpha, beta)
             if newValue < value:
                 value = newValue
         for move in moves:
             newBoard = makeMove(obs, move, color)
-            _ ,newValue = minimax(newBoard, -color, depth-1)
+            _, newValue = minimax(newBoard, -color, depth-1, alpha, beta)
             if newValue < value:
                 value = newValue
                 bestmove = move
-
+            beta = min(beta, value)
+            if beta <= alpha:
+                break
     return bestmove, value
