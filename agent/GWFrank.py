@@ -3,6 +3,9 @@ import pygame
 import sys
 from pygame.constants import MOUSEBUTTONDOWN, MOUSEMOTION
 
+from agent.our_functions.minimax import minimax
+from agent.our_functions.random_move import randomMove
+
 class BaseAgent():
     def __init__(self, color = "black", rows_n = 8, cols_n = 8, width = 600, height = 600):
         self.color = color
@@ -44,27 +47,32 @@ class BaseAgent():
 
         raise NotImplementError("You didn't finish your step function. Please override step function of BaseAgent!")
     
-class HumanAgent(BaseAgent):
+
+class MyAgent(BaseAgent):
+    # what are you doing step function?
     def step(self, reward, obs):
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.MOUSEMOTION:
-                return event.pos, event.type
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                return event.pos, pygame.USEREVENT
+        # board = [obs[8*row:8*row+8] for row in range(8)]
+        
+        obs = list(obs.values())
+        if self.color == "black":
+            c = -1
+        else:
+            c = 1
+        
+        mv, _ = minimax(obs, c, 4)
 
-        return (-1, -1), None
+        x = self.col_offset + mv[0]*self.block_len
+        y = self.row_offset + mv[1]*self.block_len
+        
+        return (x, y), pygame.USEREVENT
 
-
-class RandomAgent(BaseAgent):
+class BetterRandomAgent(BaseAgent):
     def step(self, reward, obs):
-        """
-        """
-        return (self.col_offset + random.randint(0, self.cols_n-1) * self.block_len, self.row_offset + random.randint(0, self.rows_n-1) * self.block_len), pygame.USEREVENT
-
-
-if __name__ == "__main__":
-    agent = RandomAgent()
-    print(agent.step(None, None))
+        if self.color == "black":
+            c = -1
+        else:
+            c = 1
+        mv = randomMove(obs, c)
+        x = self.col_offset + mv[0]*self.block_len
+        y = self.row_offset + mv[1]*self.block_len
+        return (x, y), pygame.USEREVENT

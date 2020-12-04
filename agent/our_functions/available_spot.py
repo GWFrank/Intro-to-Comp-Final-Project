@@ -13,10 +13,8 @@ def getAvailableSpot(obs, color):
     
     Returns
     -----------
-    list(tuple)
-            Each tuple represent cordinate of a available spot (x, y).
-            x : int 0 ~ 7
-            y : int 0 ~ 7
+    list(int)
+            Each int represent index in obs.
     """
     
     # board = [obs[8*row:8*row+8] for row in range(8)]
@@ -33,8 +31,6 @@ def getAvailableSpot(obs, color):
             if piece == allie:
                 for i in [-1, 0, 1]:
                     for j in [-1, 0, 1]:
-                        # if i != 0 or j != 0:
-                        # original chk_atk()
                         can_attack = False
                         chk_row, chk_col = row+j, col+i
                         while (chk_row >= 0 and chk_col >= 0
@@ -49,6 +45,8 @@ def getAvailableSpot(obs, color):
                                 break
                             chk_row += j
                             chk_col += i
+                        # if i != 0 or j != 0:
+                        #   original chk_atk()
                         # else:
                         #     continue
 

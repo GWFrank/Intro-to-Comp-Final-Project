@@ -1,9 +1,14 @@
-from eval_funcs import positionalEval
-from make_move import makeMove
-from available_spot import getAvailableSpot
+# from eval_funcs import positionalEval
+# from make_move import makeMove
+# from available_spot import getAvailableSpot
+
+from .eval_funcs import positionalEval
+from .make_move import makeMove
+from .available_spot import getAvailableSpot
+
 evalBoard = positionalEval
 
-def minimax(obs,color,depth):
+def minimax(obs, color, depth):
     '''
     Find optimal position in the game.
 
@@ -15,7 +20,7 @@ def minimax(obs,color,depth):
                  larger value if white is more likely to win, vise versa.
 
     - output
-      tuple: best position
+      integer: best position
       integer: value
     '''
     
