@@ -20,4 +20,17 @@ def positionalEval(obs):
             s += valueMap[i][j] * obs[i*8+j]
     return s
 
-# def MobilityEval(obs)
+def positionalEval2(obs):
+    valueMap = [[500, -86, 96, 26, 26, 96, -86, 500],
+                [-86, -1219, -6, 0, 0, -6, -1219, -86],
+                [96, -6, 52, 15, 15, 52, -6, 96],
+                [26, 0, 15, -17, -17, 15, 0, 26],
+                [26, 0, 15, -17, -17, 15, 0, 26],
+                [96, -6, 52, 15, 15, 52, -6, 96],
+                [-86, -1219, -6, 0, 0, -6, -1219, -86],
+                [500, -86, 96, 26, 26, 96, -86, 500]]
+    s = 0
+    for i in range(8):
+        for j in range(8):
+            s += valueMap[i][j] * obs[i*8+j]
+    return s
