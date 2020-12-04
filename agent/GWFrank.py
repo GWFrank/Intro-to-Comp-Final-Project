@@ -1,10 +1,10 @@
 import random
 import pygame
 import sys
-
 from pygame.constants import MOUSEBUTTONDOWN, MOUSEMOTION
 
 from agent.our_functions.minimax import minimax
+from agent.our_functions.random_move import randomMove
 
 class BaseAgent():
     def __init__(self, color = "black", rows_n = 8, cols_n = 8, width = 600, height = 600):
@@ -52,11 +52,8 @@ class MyAgent(BaseAgent):
     # what are you doing step function?
     def step(self, reward, obs):
         # board = [obs[8*row:8*row+8] for row in range(8)]
-        # print(obs)
-        # c = 0
-        # print(obs)
+        
         obs = list(obs.values())
-        # print(obs)
         if self.color == "black":
             c = -1
         else:
@@ -68,4 +65,14 @@ class MyAgent(BaseAgent):
         y = self.row_offset + mv[1]*self.block_len
         
         return (x, y), pygame.USEREVENT
-                
+
+class BetterRandomAgent(BaseAgent):
+    def step(self, reward, obs):
+        if self.color == "black":
+            c = -1
+        else:
+            c = 1
+        mv = randomMove(obs, c)
+        x = self.col_offset + mv[0]*self.block_len
+        y = self.row_offset + mv[1]*self.block_len
+        return (x, y), pygame.USEREVENT

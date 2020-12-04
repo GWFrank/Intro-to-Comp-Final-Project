@@ -19,8 +19,8 @@ def makeMove(obs, move, color):
 
     Returns
     -----------
-    list(list)
-            2D array of the board
+    list
+            1D array of the board
     """
     # board = [obs[8*row:8*row+8] for row in range(8)]
     obs = obs.copy()
@@ -35,6 +35,9 @@ def makeMove(obs, move, color):
     for horz in [-1, 0, 1]:
         for vert in [-1, 0, 1]:
             # if horz != 0 or vert != 0:
+            #     something
+            # else:
+            #     pass
             chk_row, chk_col = row+vert, col+horz
             flipping_pos = []
 
@@ -56,8 +59,6 @@ def makeMove(obs, move, color):
 
                 chk_row += vert
                 chk_col += horz
-            # else:
-            #     pass
     
     return obs
 

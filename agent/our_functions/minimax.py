@@ -21,7 +21,7 @@ def minimax(obs, color, depth):
                  larger value if white is more likely to win, vise versa.
 
     - output
-      tuple: best position
+      integer: best position
       integer: value
     '''
     
