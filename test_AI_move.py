@@ -41,6 +41,8 @@ while nomovecount <=2:
         nomovecount += 1
     printBoard(board)
     color = -color
-    
+
 end = time.time() # timer
 print(f"a game takes {end-start:.3f}s") # timer
+print(sum(board))
+# printBoard(board)
