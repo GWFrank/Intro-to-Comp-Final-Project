@@ -5,11 +5,9 @@ def makeMove(obs, move, color):
     obs:    1D-list
             1D array of the board
 
-    move:   tuple
-            where to place the piece (x, y)
-            
-            col x : 0 ~ 7   left -> right
-            row y : 0 ~ 7   top  -> bottom
+    move:   int
+            where to place the piece
+            index for obs
     
     color:  int
             who's making a move
@@ -22,7 +20,7 @@ def makeMove(obs, move, color):
     list
             1D array of the board
     """
-    # board = [obs[8*row:8*row+8] for row in range(8)]
+
     obs = obs.copy()
 
     empty = 0
@@ -30,31 +28,28 @@ def makeMove(obs, move, color):
     enemy = -color
     
 
-    col, row = move
+    col, row = move%8, move//8
 
     for horz in [-1, 0, 1]:
         for vert in [-1, 0, 1]:
-            # if horz != 0 or vert != 0:
-            #     something
-            # else:
-            #     pass
             chk_row, chk_col = row+vert, col+horz
             flipping_pos = []
 
             while (chk_row >= 0 and chk_col >= 0
                     and chk_row < 8 and chk_col < 8):
+                chk_pos = 8*chk_row + chk_col
+
+                if obs[chk_pos] == enemy:
+                    flipping_pos.append(chk_pos)
                 
-                if obs[8*chk_row + chk_col] == enemy:
-                    flipping_pos.append(8*chk_row + chk_col)
-                
-                elif obs[8*chk_row + chk_col] == allie:
+                elif obs[chk_pos] == allie:
                     if flipping_pos != []:
                         for p in flipping_pos:
                             obs[p] = allie
-                        obs[8*row + col] = allie
+                        obs[move] = allie
                     break
                 
-                elif obs[8*chk_row + chk_col] == empty:
+                elif obs[chk_pos] == empty:
                     break
 
                 chk_row += vert
@@ -72,7 +67,7 @@ if __name__ == "__main__":
                    0, -1,  0,  0, -1,  0,  0,  0,
                    0,  0,  0,  0,  0,  0,  0,  0 ]
 
-    test = makeMove(test_board, (1, 3), -1)
+    test = makeMove(test_board, (8*1 + 0), -1)
     for i in range(8):
         for j in range(8):
             print(f"{test[8*i + j]:2}", end=" ")

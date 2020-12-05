@@ -59,10 +59,10 @@ class MyAgent(BaseAgent):
         else:
             c = 1
         
-        mv, _ = minimax(obs, c, 4, -float('inf'), float('inf'))
+        mv, _ = minimax(obs, c, 6, -float('inf'), float('inf'))
 
-        x = self.col_offset + mv[0]*self.block_len
-        y = self.row_offset + mv[1]*self.block_len
+        x = self.col_offset + (mv%8)  * self.block_len
+        y = self.row_offset + (mv//8) * self.block_len
         
         return (x, y), pygame.USEREVENT
 
@@ -73,6 +73,6 @@ class BetterRandomAgent(BaseAgent):
         else:
             c = 1
         mv = randomMove(obs, c)
-        x = self.col_offset + mv[0]*self.block_len
-        y = self.row_offset + mv[1]*self.block_len
+        x = self.col_offset + (mv%8)  * self.block_len
+        y = self.row_offset + (mv//8) * self.block_len
         return (x, y), pygame.USEREVENT
