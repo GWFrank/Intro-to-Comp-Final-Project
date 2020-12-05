@@ -3,6 +3,7 @@ import time # timer
 
 from agent.our_functions.minimax import minimax
 from agent.our_functions.make_move import makeMove
+from agent.our_functions.available_spot import getAvailableSpot
 
 def printBoard(obs):
     for i in range(8):
@@ -24,7 +25,6 @@ board = [0,  0,  0,  0,  0,  0,  0,  0,
          0,  0,  0,  0,  0,  0,  0,  0,
          0,  0,  0,  0,  0,  0,  0,  0]
 
-# board = np.array(board)
 
 color = -1
 nomovecount = 0
@@ -32,20 +32,20 @@ colorName = {1: 'white', -1: 'black'}
 start = time.time() # timer
 while nomovecount <= 2:
     move, value = minimax(board, color, 4, -float('inf'), float('inf'))
+    
     try:
-        print((move%8, move//8))
-    except:
-        pass
-    # print(value)
-    if move:
+        print(f"{colorName[color]} move in {(move%8, move//8)} with value {value}") # print
+        print(f"available spots : {getAvailableSpot(board, color)}") # print
         board = makeMove(board, move, color)
         nomovecount = 0
-    else:
+        printBoard(board) # print
+        print("="*20) # print
+    except:
         nomovecount += 1
-    printBoard(board)
+        pass
+    
     color = -color
 
 end = time.time() # timer
 print(f"a game takes {end-start:.3f}s") # timer
-print(sum(board))
-# printBoard(board)
+print("board sum : ", sum(board))

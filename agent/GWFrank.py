@@ -51,14 +51,12 @@ class BaseAgent():
 class MyAgent(BaseAgent):
     # what are you doing step function?
     def step(self, reward, obs):
-        # board = [obs[8*row:8*row+8] for row in range(8)]
-        
         obs = list(obs.values())
+        
         if self.color == "black":
             c = -1
         else:
             c = 1
-        
         mv, _ = minimax(obs, c, 6, -float('inf'), float('inf'))
 
         x = self.col_offset + (mv%8)  * self.block_len

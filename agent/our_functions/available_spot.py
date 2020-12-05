@@ -23,14 +23,17 @@ def getAvailableSpot(obs, color):
 
     available_spot = []
     # available_spot = set()
-    
+
     for pos in range(64):
         piece = obs[pos]
+
         if piece == allie:
+            row, col = pos//8, pos%8
+
             for i in [-1, 0, 1]:
                 for j in [-1, 0, 1]:
                     can_attack = False
-                    chk_row, chk_col = (pos//8)+j, (pos%8)+i
+                    chk_row, chk_col = (row)+j, (col)+i
 
                     while (chk_row >= 0 and chk_col >= 0
                             and chk_row < 8 and chk_col < 8):
@@ -45,12 +48,12 @@ def getAvailableSpot(obs, color):
                         elif obs[chk_pos] == empty:
                             if can_attack and chk_pos not in available_spot:
                                 available_spot.append(chk_pos)
-                                # available_spot.add(chk_pos) # this seems to be even quicker, because set avoid mutiple copy
+                            # if can_attack:
+                            #     available_spot.add(chk_pos)
                             break
                         chk_row += j
                         chk_col += i
-
-    # available_spot = list(set(available_spot))
+    
     return available_spot
 
 if __name__ == "__main__":
@@ -80,4 +83,4 @@ if __name__ == "__main__":
             else:
                 print("0", end=" ")
         print("") 
-    print(test)
+    # print(test)
