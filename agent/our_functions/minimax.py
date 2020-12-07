@@ -65,3 +65,45 @@ def minimax(obs, color, depth, alpha, beta):
             if beta <= alpha:
                 break
     return bestmove, value
+
+def minimax_adj(obs, color, depth, alpha, beta, eval_func):
+    if depth == 0:
+        return None, eval_func(obs)
+
+    moves = getAvailableSpot(obs, color)
+    if color == 1:
+        value = -float('inf')
+        bestmove = None
+        if len(moves) == 0: # no move, proceed to other player
+            _ ,newValue = minimax(obs, -color, depth-1, alpha, beta)
+            if newValue > value:
+                value = newValue
+        for move in moves:
+            newBoard = makeMove(obs, move, color)
+            _ ,newValue = minimax(newBoard, -color, depth-1, alpha, beta)
+            if newValue > value:
+                value = newValue
+                bestmove = move
+            alpha = max(alpha, value)
+            if beta <= alpha:
+                break
+
+    else:
+        value = float('inf')
+        bestmove = None
+        if len(moves) == 0:
+            _, newValue = minimax(obs, -color, depth-1, alpha, beta)
+            if newValue < value:
+                value = newValue
+        for move in moves:
+            newBoard = makeMove(obs, move, color)
+            _, newValue = minimax(newBoard, -color, depth-1, alpha, beta)
+            if newValue < value:
+                value = newValue
+                bestmove = move
+            beta = min(beta, value)
+            if beta <= alpha:
+                break
+    return bestmove, value
+
+

@@ -26,16 +26,16 @@ board = [0,  0,  0,  0,  0,  0,  0,  0,
          0,  0,  0,  0,  0,  0,  0,  0]
 
 
+start = time.time() # timer
 color = -1
 nomovecount = 0
 colorName = {1: 'white', -1: 'black'}
-start = time.time() # timer
 while nomovecount <= 2:
-    move, value = minimax(board, color, 4, -float('inf'), float('inf'))
+    move, value = minimax(board, color, 5, -float('inf'), float('inf'))
     
     try:
         print(f"{colorName[color]} move in {(move%8, move//8)} with value {value}") # print
-        print(f"available spots : {getAvailableSpot(board, color)}") # print
+        # print(f"available spots : {getAvailableSpot(board, color)}") # print
         board = makeMove(board, move, color)
         nomovecount = 0
         printBoard(board) # print
