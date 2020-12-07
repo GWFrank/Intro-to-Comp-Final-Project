@@ -111,4 +111,4 @@ def matchup(agent1, agent2, rounds=10):
     # print(f"Agent2 wins {agent2_w} ({agent2_w/(rounds*2)})")
     # print(f"Draw happens {draw} times ({draw/(rounds*2)})")
     # print("="*20)
-    return (agent1_w, agent2_w, draw)
+    return ((agent1.s_depth, agent1_w), (agent2.s_depth, agent2_w), draw)
