@@ -1,20 +1,11 @@
 def getAvailableSpot(obs, color):
     """
-    Parameters
-    -----------
-    obs:    1D-list
-            1D array of the board
-    
-    color:  int
-            getting who's available spot
-
-            1  -> white
-            -1 -> black
+    Args:
+        obs (list): 1D array of the board
+        color (int): -1 means black, 1 means white
     
     Returns
-    -----------
-    list(int)
-            Each integer represent idx in 1D map.
+        list: each element represent index in 1D map.
     """
     
     empty = 0

@@ -9,8 +9,6 @@ class TestAgent:
     
     def play(self, obs):
         mv, _ = minimax_adj(obs, self.color, self.s_depth, -float("inf"), float("inf"), self.eval_func)
-        # x = mv%8
-        # y = mv//8
         return mv
 
 def printBoard(obs):
@@ -25,6 +23,15 @@ def printBoard(obs):
         print('')
 
 def matchup(agent1, agent2, rounds=10):
+    """Let two agents play against each other
+    Args:
+        agent1 (class TestAgent)
+        agent2 (class TestAgent)
+        rounds (int): how many rounds of game (each going first)
+    
+    Returns:
+        tuple: ((agent1.s_depth, agent1_wins), (agent2.s_depth, agent2_wins), draws)
+    """
     agent1_w = 0
     agent2_w = 0
     draw = 0

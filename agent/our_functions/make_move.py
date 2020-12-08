@@ -1,24 +1,12 @@
 def makeMove(obs, move, color):
     """
-    Parameters
-    -----------
-    obs:    1D-list
-            1D array of the board
-
-    move:   int
-            where to place the piece
-            index for obs
+    Args:
+        obs (list): 1D array of the board
+        move (int): 1D index that indicates where to place the piece
+        color (int): -1 means black, 1 means white
     
-    color:  int
-            who's making a move
-
-            1  -> white
-            -1 -> black
-
-    Returns
-    -----------
-    list
-            1D array of the board
+    Returns:
+        list: 1D array of the board
     """
 
     obs = obs.copy()
