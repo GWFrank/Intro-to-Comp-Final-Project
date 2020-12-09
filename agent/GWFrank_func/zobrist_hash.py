@@ -11,20 +11,23 @@ def initHash(board, bitstrs):
             init_hash = init_hash^bitstrs[f"{board[i]}{i}"]
     return init_hash
 
-def updateHash(brd_hash, changes, bitstrs):
+def updateHash(brd_hash, old_board, new_board, bitstrs):
     """
     Args:
         brd_hash (int): board's previous hash
-        changes (list): list of changes on the board, each element
-                        is a tuple (pos, pre_color, cur_color)
-    
+        old_board (list): board's previous state
+        new_board (list): board's current state
+        bitstrs (dict): the bitstrings used to hash in the beginning    
     Returns:
         int : board's new hash
     """
-
-    # with open("agent/GWFrank_func/bitstr.json", "r") as f:
-    #     bitstrs = json.load(f)
-    for ch in changes:
-        brd_hash = brd_hash^bitstrs[f"{ch[1]}{ch[0]}"]^bitstrs[f"{ch[2]}{ch[0]}"]
-
+    for i in range(64):
+        old_piece = old_board[i]
+        new_piece = new_board[i]
+        if old_piece != new_piece:
+            if old_piece == 0:
+                brd_hash = brd_hash^bitstrs[f"{new_piece}{i}"]
+            else:
+                brd_hash = brd_hash^bitstrs[f"{old_piece}{i}"]^bitstrs[f"{new_piece}{i}"]
+    
     return brd_hash
