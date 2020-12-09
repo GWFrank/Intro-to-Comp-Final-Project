@@ -101,8 +101,8 @@ def matchup(agent1, agent2, rounds=10):
     agent1.loss += agent2_w
     agent1.draw += draw
 
-    agent2.win += agent1_w
-    agent2.loss += agent2_w
+    agent2.win += agent2_w
+    agent2.loss += agent1_w
     agent2.draw += draw
 
     return ((agent1.s_depth, agent1_w), (agent2.s_depth, agent2_w), draw)

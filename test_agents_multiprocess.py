@@ -6,8 +6,6 @@ from agent.GWFrank_func.eval_funcs import positionalEval
 
 
 if __name__ == "__main__":
-    start = time.time()
-        
     rounds = 1
     max_d = 6
     process_num = 4
@@ -48,6 +46,3 @@ if __name__ == "__main__":
     #     rule, depth = a.rule, a.s_depth
     #     print(f"{rule} with depth {depth} has record {W}-{L}-{D}")
     # print("="*20)
-
-    end = time.time()
-    print(f"{end-start:.3f}s")
