@@ -3,8 +3,8 @@ import pygame
 import sys
 from pygame.constants import MOUSEBUTTONDOWN, MOUSEMOTION
 
-from agent.our_functions.minimax import minimax
-from agent.our_functions.random_move import randomMove
+from agent.GWFrank_func.minimax import minimax
+from agent.GWFrank_func.random_move import randomMove
 
 class BaseAgent():
     def __init__(self, color = "black", rows_n = 8, cols_n = 8, width = 600, height = 600):

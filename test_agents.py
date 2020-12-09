@@ -1,8 +1,8 @@
 import multiprocessing as mp
 import time
 
-from agent.our_functions.match_agents import matchup, TestAgent
-from agent.our_functions.eval_funcs import positionalEval
+from agent.GWFrank_func.match_agents import matchup, TestAgent
+from agent.GWFrank_func.eval_funcs import positionalEval
 
 
 if __name__ == "__main__":

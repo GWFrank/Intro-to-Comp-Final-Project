@@ -1,9 +1,9 @@
 import numpy as np
 import time # timer
 
-from agent.our_functions.minimax import minimax
-from agent.our_functions.make_move import makeMove
-from agent.our_functions.available_spot import getAvailableSpot
+from agent.GWFrank_func.minimax import minimax
+from agent.GWFrank_func.make_move import makeMove
+from agent.GWFrank_func.available_spot import getAvailableSpot
 
 def printBoard(obs):
     for i in range(8):
