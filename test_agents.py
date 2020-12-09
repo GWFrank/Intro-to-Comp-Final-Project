@@ -1,7 +1,7 @@
 import multiprocessing as mp
 import time
 
-from agent.GWFrank_func.match_agents import matchup, TestAgent
+from agent.GWFrank_func.match_agents import matchup, MinimaxTestAgent
 from agent.GWFrank_func.eval_funcs import positionalEval
 
 
@@ -12,7 +12,7 @@ if __name__ == "__main__":
     max_d = 6
     process_num = 4
 
-    pos_agents = [TestAgent(positionalEval, d) for d in range(1, max_d+1)]
+    pos_agents = [MinimaxTestAgent(positionalEval, d) for d in range(1, max_d+1)]
     tot_win = [0 for _ in range(max_d)]
     tot_draw = 0
 
@@ -40,6 +40,14 @@ if __name__ == "__main__":
         print(f"Depth {d+1} wins {tot_win[d]} ({tot_win[d]/(rounds*2*(max_d-1)):.2f})")
     print(f"Draw happens {tot_draw} times")
     print("="*20)
+
+    # print("="*20)
+    # print(f"In {rounds*2*(max_d-1)} games...")
+    # for a in pos_agents:
+    #     W, L, D = a.win, a.loss, a.draw
+    #     rule, depth = a.rule, a.s_depth
+    #     print(f"{rule} with depth {depth} has record {W}-{L}-{D}")
+    # print("="*20)
 
     end = time.time()
     print(f"{end-start:.3f}s")
