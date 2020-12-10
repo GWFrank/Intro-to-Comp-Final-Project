@@ -1,13 +1,14 @@
 import multiprocessing as mp
 import time
 
-from agent.GWFrank_func.match_agents import matchup, MinimaxTestAgent
+from agent.GWFrank_func.match_agents import matchup
+from agent.GWFrank_func.test_agent_class import MinimaxTestAgent
 from agent.GWFrank_func.eval_funcs import positionalEval
 
 
 if __name__ == "__main__":
     rounds = 1
-    max_d = 6
+    max_d = 5
     process_num = 4
 
     pos_agents = [MinimaxTestAgent(positionalEval, d) for d in range(1, max_d+1)]

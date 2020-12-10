@@ -1,19 +1,4 @@
-from .minimax import minimax_adj
 from .make_move import makeMove
-
-class MinimaxTestAgent:
-    def __init__(self, eval_func, s_depth):
-        self.eval_func = eval_func # function
-        self.color = None # int
-        self.s_depth = s_depth # int
-        self.rule = "pure minimax"
-        self.win = 0
-        self.loss = 0
-        self.draw = 0
-    
-    def play(self, obs):
-        mv, _ = minimax_adj(obs, self.color, self.s_depth, -float("inf"), float("inf"), self.eval_func)
-        return mv
 
 def printBoard(obs):
     for i in range(8):
