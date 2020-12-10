@@ -67,11 +67,51 @@ class MyAgent(BaseAgent):
 
 class BetterRandomAgent(BaseAgent):
     def step(self, reward, obs):
+        obs = list(obs.values())
         if self.color == "black":
             c = -1
         else:
             c = 1
+        
         mv = randomMove(obs, c)
+
+        x = self.col_offset + (mv%8)  * self.block_len
+        y = self.row_offset + (mv//8) * self.block_len
+        return (x, y), pygame.USEREVENT
+
+class BasicMinimaxAgent(BaseAgent):
+    def step(self, reward, obs):
+        obs = list(obs.values())
+        if self.color == "black":
+            c = -1
+        else:
+            c = 1
+        
+        depth = 5
+        
+        mv, _ = minimax(obs, c, depth, -float('inf'), float('inf'))
+
+        x = self.col_offset + (mv%8)  * self.block_len
+        y = self.row_offset + (mv//8) * self.block_len
+        return (x, y), pygame.USEREVENT
+
+class LittleRandomAgent(BaseAgent):
+    def step(self, reward, obs):
+        obs = list(obs.values())
+        if self.color == "black":
+            c = -1
+        else:
+            c = 1
+        
+        depth = 5
+        move_random_prob = 3*10**(-2)
+        
+        p = random.random()
+        if p > move_random_prob:
+            mv, _ = minimax(obs, c, depth, -float('inf'), float('inf'))
+        else:
+            mv = randomMove(obs, c)
+        
         x = self.col_offset + (mv%8)  * self.block_len
         y = self.row_offset + (mv//8) * self.block_len
         return (x, y), pygame.USEREVENT
