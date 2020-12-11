@@ -90,9 +90,9 @@ def matchup(agent1, agent2, rounds=10):
     agent2.loss += agent1_w
     agent2.draw += draw
 
-    return ((agent1.s_depth, agent1_w), (agent2.s_depth, agent2_w), draw)
+    # return ((agent1.s_depth, agent1_w), (agent2.s_depth, agent2_w), draw)
 
-def matchup_mp(agent1, agent2, rounds=10, process_num=4):
+def matchup_mp(agent1, agent2, rounds=10, process_num=1):
     """multiprocess version of matchup()
     Args:
         agent1
