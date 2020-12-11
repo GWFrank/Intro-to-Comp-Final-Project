@@ -5,8 +5,7 @@ from agent.GWFrank_func.test_agent_class import MinimaxTestAgent, LittleRandomTe
 from agent.GWFrank_func.eval_funcs import posEval, posEvalEndgameVariation
 
 if __name__ == "__main__":
-
-    rounds = 50
+    rounds = 100
     depth = 4
     process_num = 4
     
@@ -15,7 +14,7 @@ if __name__ == "__main__":
             #   MinimaxTestAgent(posEvalEndgameVariation, depth),
               RandomTestAgent(),
              ]
-    agent_num = len(agents)
+    agent_num = 2
     agent1 = agents[0]
     agent2 = agents[1]
 
@@ -77,7 +76,7 @@ if __name__ == "__main__":
 
     print("="*20)
     print(f"In {rounds*2} games...")
-    for a in agents:
+    for a in [agent1, agent2]:
         W, L, D = a.win, a.loss, a.draw
         name = a.agent_name()
         print(f"{name} has record {W}-{L}-{D}")
