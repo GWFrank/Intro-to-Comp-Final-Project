@@ -1,3 +1,5 @@
+import multiprocessing as mp
+
 from .make_move import makeMove
 
 def printBoard(obs):
@@ -44,7 +46,7 @@ def playgame(first_agent, second_agent):
             pass
         color = -color
     
-    return board
+    return sum(board)
 
 def matchup(agent1, agent2, rounds=10):
     """Let two agents play against each other many times.
@@ -62,8 +64,7 @@ def matchup(agent1, agent2, rounds=10):
     
     # agent 1 go first as black
     for _ in range(rounds):
-        board = playgame(agent1, agent2)
-        game_result = sum(board)
+        game_result = playgame(agent1, agent2)
         if game_result > 0:
             agent2_w += 1
         elif game_result < 0:
@@ -73,13 +74,72 @@ def matchup(agent1, agent2, rounds=10):
     
     # agent 2 go first as black
     for _ in range(rounds):
-        board = playgame(agent2, agent1)
-        game_result = sum(board)
+        game_result = playgame(agent2, agent1)
         if game_result > 0:
             agent1_w += 1
         elif game_result < 0:
             agent2_w += 1
         elif game_result == 0:
+            draw += 1
+    
+    agent1.win += agent1_w
+    agent1.loss += agent2_w
+    agent1.draw += draw
+
+    agent2.win += agent2_w
+    agent2.loss += agent1_w
+    agent2.draw += draw
+
+    return ((agent1.s_depth, agent1_w), (agent2.s_depth, agent2_w), draw)
+
+def matchup_mp(agent1, agent2, rounds=10):
+    """multiprocess version of matchup()
+    Args:
+        agent1
+        agent2
+        rounds (int): how many rounds of game (each going first)
+    
+    Returns:
+        tuple: ((agent1.s_depth, agent1_wins), (agent2.s_depth, agent2_wins), draws)
+    """
+    process_num = 1
+    
+    agent1_w = 0
+    agent2_w = 0
+    draw = 0
+    
+    # agent 1 go first as black
+    pool = mp.Pool(process_num)
+    
+    args = [(agent1, agent2) for _ in range(rounds)]
+    game_results = pool.starmap(playgame, args)
+
+    pool.close()
+    pool.join()
+    
+    for r in game_results:
+        if r > 0:
+            agent2_w += 1
+        elif r < 0:
+            agent1_w += 1
+        elif r == 0:
+            draw += 1
+    
+    # agent 2 go first as black
+    pool = mp.Pool(process_num)
+    
+    args = [(agent2, agent1) for _ in range(rounds)]
+    game_results = pool.starmap(playgame, args)
+
+    pool.close()
+    pool.join()
+    
+    for r in game_results:
+        if r > 0:
+            agent1_w += 1
+        elif r < 0:
+            agent2_w += 1
+        elif r == 0:
             draw += 1
     
     agent1.win += agent1_w

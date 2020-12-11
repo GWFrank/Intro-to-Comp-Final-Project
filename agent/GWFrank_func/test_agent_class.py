@@ -14,6 +14,10 @@ class RandomTestAgent(BasicTestAgent):
         super().__init__()
         self.rule = "random"
     
+    def play(self, obs):
+        mv = randomMove(obs, self.color)
+        return mv
+
     def agent_name(self):
         return f"{self.rule} agent"
 

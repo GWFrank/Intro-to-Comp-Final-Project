@@ -46,24 +46,7 @@ class BaseAgent():
         """
 
         raise NotImplementError("You didn't finish your step function. Please override step function of BaseAgent!")
-    
 
-class MyAgent(BaseAgent):
-    # what are you doing step function?
-    def step(self, reward, obs):
-        obs = list(obs.values())
-        if self.color == "black":
-            c = -1
-        else:
-            c = 1
-        
-        depth = 5
-        mv, _ = minimax(obs, c, depth, -float('inf'), float('inf'))
-
-        x = self.col_offset + (mv%8)  * self.block_len
-        y = self.row_offset + (mv//8) * self.block_len
-        
-        return (x, y), pygame.USEREVENT
 
 class BetterRandomAgent(BaseAgent):
     def step(self, reward, obs):
@@ -115,3 +98,21 @@ class LittleRandomAgent(BaseAgent):
         x = self.col_offset + (mv%8)  * self.block_len
         y = self.row_offset + (mv//8) * self.block_len
         return (x, y), pygame.USEREVENT
+
+class MyAgent(BasicMinimaxAgent):
+    pass
+    # what are you doing step function?
+    # def step(self, reward, obs):
+    #     obs = list(obs.values())
+    #     if self.color == "black":
+    #         c = -1
+    #     else:
+    #         c = 1
+        
+    #     depth = 5
+    #     mv, _ = minimax(obs, c, depth, -float('inf'), float('inf'))
+
+    #     x = self.col_offset + (mv%8)  * self.block_len
+    #     y = self.row_offset + (mv//8) * self.block_len
+        
+    #     return (x, y), pygame.USEREVENT
