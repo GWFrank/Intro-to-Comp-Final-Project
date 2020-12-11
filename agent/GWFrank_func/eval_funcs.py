@@ -25,7 +25,7 @@ def posEvalEndgameVariation(obs):
             if obs[i*8+j] == 0:
                 empty += 1
 
-    if empty <= 10:
+    if empty <= 5:
         return simple_s * 16
     return s
 
