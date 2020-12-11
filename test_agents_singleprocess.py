@@ -1,21 +1,22 @@
 from agent.GWFrank_func.match_agents import matchup
-from agent.GWFrank_func.test_agent_class import MinimaxTestAgent
-from agent.GWFrank_func.eval_funcs import positionalEval
+from agent.GWFrank_func.test_agent_class import MinimaxTestAgent, LittleRandomTestAgent
+from agent.GWFrank_func.eval_funcs import posEval, posEvalEndgameVariation
 
-rounds = 1
-max_d = 4
+rounds = 5
 
-pos_agents = [MinimaxTestAgent(positionalEval, d) for d in range(1, max_d+1)]
+agents = [LittleRandomTestAgent(posEvalEndgameVariation, 5, 0.03),
+          MinimaxTestAgent(posEvalEndgameVariation, 5)]
+agent_num = len(agents)
 
-for a in range(max_d):
-    for b in range(max_d):
-        if a <= b:
+for a in range(agent_num):
+    for b in range(agent_num):
+        if a >= b:
             continue
-        matchup(pos_agents[a], pos_agents[b], rounds)
+        matchup(agents[a], agents[b], rounds)
 
 print("="*20)
-print(f"In {rounds*2*(max_d-1)} games...")
-for a in pos_agents:
+print(f"In {rounds*2*(agent_num)*(agent_num-1)} games...")
+for a in agents:
     W, L, D = a.win, a.loss, a.draw
     rule, depth = a.rule, a.s_depth
     print(f"{rule} with depth {depth} has record {W}-{L}-{D}")

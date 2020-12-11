@@ -3,7 +3,7 @@ import time
 
 from agent.GWFrank_func.match_agents import matchup
 from agent.GWFrank_func.test_agent_class import MinimaxTestAgent
-from agent.GWFrank_func.eval_funcs import positionalEval
+from agent.GWFrank_func.eval_funcs import posEval, posEvalEndgameVariation
 
 
 if __name__ == "__main__":
@@ -11,7 +11,7 @@ if __name__ == "__main__":
     max_d = 5
     process_num = 4
 
-    pos_agents = [MinimaxTestAgent(positionalEval, d) for d in range(1, max_d+1)]
+    pos_agents = [MinimaxTestAgent(posEval, d) for d in range(1, max_d+1)]
     tot_win = [0 for _ in range(max_d)]
     tot_draw = 0
 
