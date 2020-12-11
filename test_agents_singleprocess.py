@@ -2,10 +2,10 @@ from agent.GWFrank_func.match_agents import matchup
 from agent.GWFrank_func.test_agent_class import MinimaxTestAgent, LittleRandomTestAgent
 from agent.GWFrank_func.eval_funcs import posEval, posEvalEndgameVariation
 
-rounds = 10
-
-agents = [LittleRandomTestAgent(posEvalEndgameVariation, 5, 0.003),
-          MinimaxTestAgent(posEvalEndgameVariation, 5)]
+rounds = 100
+depth = 4
+agents = [LittleRandomTestAgent(posEvalEndgameVariation, depth, 0.03),
+          MinimaxTestAgent(posEvalEndgameVariation, depth)]
 agent_num = len(agents)
 
 for a in range(agent_num):

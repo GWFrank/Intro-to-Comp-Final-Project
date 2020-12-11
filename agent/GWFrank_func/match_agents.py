@@ -35,8 +35,8 @@ def playgame(first_agent, second_agent):
     color = -1
     nomovecount = 0
     while nomovecount <= 2:
-        move = agents[color].play(board)
         try:
+            move = agents[color].play(board)
             board = makeMove(board, move, color)
             nomovecount = 0
         except:
