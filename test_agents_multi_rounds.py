@@ -6,11 +6,11 @@ from agent.GWFrank_func.test_agent_class import MinimaxTestAgent, LittleRandomTe
 from agent.GWFrank_func.eval_funcs import posEval, posEvalEndgameVariation
 
 if __name__ == "__main__": # Don't delete this line, it's needed for mp to work
-    # start = time.time() # timer
+    start = time.time() # timer
     rounds = 50
     depth = 4
-    core_cnt = os.cpu_count()//2
-    # core_cnt = 4
+    # core_cnt = os.cpu_count()//2
+    core_cnt = 10
     
     agents = [
               LittleRandomTestAgent(posEvalEndgameVariation, depth, 0.03),
@@ -32,5 +32,5 @@ if __name__ == "__main__": # Don't delete this line, it's needed for mp to work
         print(f"{name} has record {W}-{L}-{D}")
     print("="*20)
 
-    # end = time.time() # timer
-    # print(f"test finish in {end-start:.2f}s") # timer
+    end = time.time() # timer
+    print(f"test finish in {end-start:.2f}s") # timer

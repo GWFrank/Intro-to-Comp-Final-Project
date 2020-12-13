@@ -9,6 +9,29 @@ class BasicTestAgent:
         self.win, self.loss, self.draw = 0, 0, 0
         self.rule = None
 
+class NEATAgent(BasicTestAgent):
+    def __init__(self, nn, s_depth, gen):
+        super().__init__()
+        self.nn = nn
+        self.s_depth = s_depth
+        self.gen = gen
+    
+    def eval(self, obs):
+        return self.nn.activate(tuple(obs))[0]
+    
+    def play(self, obs):
+        p = 0.2**self.gen
+        rand_p = random()
+        if rand_p > p:
+            mv, _ = minimax_adj(obs, self.color, self.s_depth
+                                , -float("inf"), float("inf"), self.eval)
+        else:
+            mv = randomMove(obs, self.color)
+        # mv, _ = minimax_adj(obs, self.color, self.s_depth
+        #                     , -float("inf"), float("inf"), self.eval)
+
+        return mv
+
 class RandomTestAgent(BasicTestAgent):
     def __init__(self):
         super().__init__()
@@ -55,3 +78,4 @@ class LittleRandomTestAgent(BasicTestAgent):
     
     def agent_name(self):
         return f"{self.rule} agent @d={self.s_depth}"
+
