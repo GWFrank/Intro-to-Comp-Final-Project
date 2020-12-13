@@ -1,84 +1,36 @@
-import multiprocessing as mp
+import os
+import time
 
 from agent.GWFrank_func.match_agents import matchup, matchup_mp, playgame
 from agent.GWFrank_func.test_agent_class import MinimaxTestAgent, LittleRandomTestAgent, RandomTestAgent
 from agent.GWFrank_func.eval_funcs import posEval, posEvalEndgameVariation
 
-if __name__ == "__main__":
-
+if __name__ == "__main__": # Don't delete this line, it's needed for mp to work
+    # start = time.time() # timer
     rounds = 50
     depth = 4
-    process_num = 4
+    core_cnt = os.cpu_count()//2
+    # core_cnt = 4
     
     agents = [
               LittleRandomTestAgent(posEvalEndgameVariation, depth, 0.03),
-            #   MinimaxTestAgent(posEvalEndgameVariation, depth),
+              MinimaxTestAgent(posEvalEndgameVariation, depth),
               RandomTestAgent(),
              ]
-    agent_num = len(agents)
+    agent_num = 2
     agent1 = agents[0]
-    agent2 = agents[1]
+    agent2 = agents[2]
 
-    # agent_num = 2
-
-    # for a in range(agent_num):
-    #     for b in range(agent_num):
-    #         if a >= b:
-    #             continue
-    #         matchup(agents[a], agents[b], rounds)
-
-    # =====================================================
-    agent1_w = 0
-    agent2_w = 0
-    draw = 0
-
-    # agent 1 go first as black
-    pool = mp.Pool(process_num)
-
-    args = [(agent1, agent2) for _ in range(rounds)]
-    game_results = pool.starmap(playgame, args)
-
-    pool.close()
-    pool.join()
-
-    for r in game_results:
-        if r > 0:
-            agent2_w += 1
-        elif r < 0:
-            agent1_w += 1
-        elif r == 0:
-            draw += 1
-
-    # agent 2 go first as black
-    pool = mp.Pool(process_num)
-
-    args = [(agent2, agent1) for _ in range(rounds)]
-    game_results = pool.starmap(playgame, args)
-
-    pool.close()
-    pool.join()
-
-    for r in game_results:
-        if r > 0:
-            agent1_w += 1
-        elif r < 0:
-            agent2_w += 1
-        elif r == 0:
-            draw += 1
-
-    agent1.win += agent1_w
-    agent1.loss += agent2_w
-    agent1.draw += draw
-
-    agent2.win += agent2_w
-    agent2.loss += agent1_w
-    agent2.draw += draw
-    # =====================================================
+    matchup_mp(agent1, agent2, rounds, core_cnt)
+    # matchup(agent1, agent2, rounds)
 
     print("="*20)
     print(f"In {rounds*2} games...")
-    for a in agents:
+    for a in [agent1, agent2]:
         W, L, D = a.win, a.loss, a.draw
         name = a.agent_name()
         print(f"{name} has record {W}-{L}-{D}")
     print("="*20)
+
+    # end = time.time() # timer
+    # print(f"test finish in {end-start:.2f}s") # timer

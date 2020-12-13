@@ -5,7 +5,8 @@ from agent.GWFrank_func.match_agents import matchup
 from agent.GWFrank_func.test_agent_class import MinimaxTestAgent
 from agent.GWFrank_func.eval_funcs import posEval, posEvalEndgameVariation
 
-
+# DON'T USE THIS PROGRAM FOR NOW
+# STILL UNDER WORK!
 if __name__ == "__main__":
     rounds = 1
     max_d = 5
