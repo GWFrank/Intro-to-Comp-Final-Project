@@ -102,7 +102,7 @@ def matchup_mp(agent1, agent2, rounds=10):
     Returns:
         tuple: ((agent1.s_depth, agent1_wins), (agent2.s_depth, agent2_wins), draws)
     """
-    process_num = 1
+    process_num = 6
     
     agent1_w = 0
     agent2_w = 0
@@ -150,4 +150,4 @@ def matchup_mp(agent1, agent2, rounds=10):
     agent2.loss += agent1_w
     agent2.draw += draw
 
-    return ((agent1.s_depth, agent1_w), (agent2.s_depth, agent2_w), draw)
+    return agent1_w/(rounds*2)

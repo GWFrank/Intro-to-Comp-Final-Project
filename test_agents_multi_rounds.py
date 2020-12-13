@@ -19,14 +19,6 @@ if __name__ == "__main__":
     agent1 = agents[0]
     agent2 = agents[1]
 
-    # agent_num = 2
-
-    # for a in range(agent_num):
-    #     for b in range(agent_num):
-    #         if a >= b:
-    #             continue
-    #         matchup(agents[a], agents[b], rounds)
-
     # =====================================================
     agent1_w = 0
     agent2_w = 0
