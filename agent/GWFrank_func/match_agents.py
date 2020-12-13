@@ -149,8 +149,4 @@ def matchup_mp(agent1, agent2, rounds=10, process_num=1):
     agent2.loss += agent1_w
     agent2.draw += draw
 
-<<<<<<< HEAD
-    # return ((agent1.s_depth, agent1_w), (agent2.s_depth, agent2_w), draw)
-=======
     return agent1_w/(rounds*2)
->>>>>>> 6e26c28 (init NN.py)
