@@ -5,11 +5,12 @@ from agent.GWFrank_func.match_agents import matchup, matchup_mp, playgame
 from agent.GWFrank_func.test_agent_class import MinimaxTestAgent, LittleRandomTestAgent, RandomTestAgent, NEATAgent
 from agent.GWFrank_func.eval_funcs import posEval, posEvalEndgameVariation
 
-target_agent = MinimaxTestAgent(posEvalEndgameVariation, 4)
+# target_agent = MinimaxTestAgent(posEvalEndgameVariation, 4)
 # target_agent = LittleRandomTestAgent(posEvalEndgameVariation, 4, 1/32)
-# target_agent = RandomTestAgent()
+target_agent = RandomTestAgent()
 
 generation = 0
+process_num = 6
 
 def eval_genomes(genome, config):
     global generation
@@ -20,14 +21,14 @@ def eval_genomes(genome, config):
     networks = []
 
     for _, g in genome:
+        g.fitness = 0
         network = neat.nn.FeedForwardNetwork.create(g, config)
         networks.append(network)
-        agents.append(NEATAgent(network, 4, generation))
-        g.fitness = 0
+        agents.append(NEATAgent(network, 1, generation))
         ge.append(g)
     
     for idx, agent in enumerate(agents):
-        win_rate = matchup_mp(agent, target_agent, 50, 10)
+        win_rate = matchup_mp(agent, target_agent, 100, process_num)
         ge[idx].fitness = 2*(win_rate-0.5)
         print(f"{idx:2} win rate: {win_rate} | fitness: {2*(win_rate-0.5)}")
         print(networks[idx])
