@@ -149,5 +149,14 @@ def matchup_mp(agent1, agent2, rounds=10, process_num=1):
     agent2.loss += agent1_w
     agent2.draw += draw
 
-    print(f"{id(agent1)} {id(agent2)}")
+    empty_board = [ 0,  0,  0,  0,  0,  0,  0,  0,
+                    0,  0,  0,  0,  0,  0,  0,  0,
+                    0,  0,  0,  0,  0,  0,  0,  0,
+                    0,  0,  0,  1, -1,  0,  0,  0,
+                    0,  0,  0, -1,  1,  0,  0,  0,
+                    0,  0,  0,  0,  0,  0,  0,  0,
+                    0,  0,  0,  0,  0,  0,  0,  0,
+                    0,  0,  0,  0,  0,  0,  0,  0 ]
+    print(agent1.eval(empty_board))
+    # print(f"{id(agent1)} {id(agent2)}")
     return agent1_w/(rounds*2)
