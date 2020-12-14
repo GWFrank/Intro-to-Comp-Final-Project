@@ -87,7 +87,7 @@ class LittleRandomAgent(BaseAgent):
             c = 1
         
         depth = 5
-        move_random_prob = 3*10**(-2)
+        move_random_prob = 2*10**(-2)
         
         p = random.random()
         if p > move_random_prob:
@@ -99,7 +99,7 @@ class LittleRandomAgent(BaseAgent):
         y = self.row_offset + (mv//8) * self.block_len
         return (x, y), pygame.USEREVENT
 
-class MyAgent(BasicMinimaxAgent):
+class MyAgent(LittleRandomMinimaxAgent):
     pass
     # what are you doing step function?
     # def step(self, reward, obs):
