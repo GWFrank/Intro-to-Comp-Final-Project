@@ -1,3 +1,4 @@
+from random import random
 def posEvalEndgameVariation(obs):
     '''
     A simple sum of value for every tile.
@@ -27,7 +28,8 @@ def posEvalEndgameVariation(obs):
 
     if empty <= 5:
         return simple_s * 16
-    return s
+
+    return s+random()
 
 def posEval(obs):
     '''
@@ -52,5 +54,4 @@ def posEval(obs):
         for j in range(8):
             
             s += valueMap[i][j] * obs[i*8+j]
-            
-    return s
+    return s+random()
