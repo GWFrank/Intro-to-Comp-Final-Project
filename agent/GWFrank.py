@@ -99,7 +99,7 @@ class LittleRandomAgent(BaseAgent):
         y = self.row_offset + (mv//8) * self.block_len
         return (x, y), pygame.USEREVENT
 
-class MyAgent(LittleRandomMinimaxAgent):
+class MyAgent(LittleRandomAgent):
     pass
     # what are you doing step function?
     # def step(self, reward, obs):
