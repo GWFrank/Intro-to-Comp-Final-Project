@@ -1,6 +1,7 @@
 import os
 import neat
 import multiprocessing as mp
+import pickle
 
 from agent.GWFrank_func.match_agents import matchup, matchup_mp, playgame
 from agent.GWFrank_func.test_agent_class import MinimaxTestAgent, LittleRandomTestAgent, RandomTestAgent, NEATAgent
@@ -74,6 +75,9 @@ def run(config_path):
 
     winner = p.run(eval_genomes, 10)
     print(f'\nBest genome:\n{winner}')
+
+    network = neat.nn.FeedForwardNetwork.create(winner, config)
+    pickle.dump(network,open("best.pickle", "wb"))
 
 
 if __name__ == "__main__":
