@@ -35,23 +35,24 @@ def eval_genomes(genome, config):
     args = []
 
     for x, agent_1 in enumerate(agents):
-        records[id(agent_1)] = 0
+        records[x] = 0
         for y, agent_2 in enumerate(agents):
             if x >= y:
                 continue
-            args.append((agent_1, agent_2, 1))
+            args.append((agent_1, agent_2, x, y, 1))
 
     results = pool.starmap(matchup, args)
     pool.close()
     pool.join()
 
     for r in results:
-        records[r[0][0]] += 3*r[0][1] + r[2][0]
-        records[r[1][0]] += 3*r[1][1] + r[2][0]
+        records[r[0][0]] += 3*r[0][1] + r[2]
+        records[r[1][0]] += 3*r[1][1] + r[2]
 
     for idx, agent in enumerate(agents):
-        point = records[id(agent)]
+        point = records[idx]
         ge[idx].fitness = point
+        # print(records[idx])
 
     # for idx, agent in enumerate(agents):
     #     win_rate = matchup_mp(agent, target_agent, 50, process_num)

@@ -48,7 +48,7 @@ def playgame(first_agent, second_agent):
     
     return sum(board)
 
-def matchup(agent1, agent2, rounds=10):
+def matchup(agent1, agent2, agent1_id, agent2_id, rounds=10):
     """Let two agents play against each other many times.
     Args:
         agent1
@@ -90,7 +90,7 @@ def matchup(agent1, agent2, rounds=10):
     # agent2.loss += agent1_w
     # agent2.draw += draw
 
-    return ((id(agent1), agent1_w), (id(agent2), agent2_w), draw)
+    return ((agent1_id, agent1_w), (agent2_id, agent2_w), draw)
 
 def matchup_mp(agent1, agent2, rounds=10, process_num=1):
     """multiprocess version of matchup()
