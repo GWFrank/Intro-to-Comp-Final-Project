@@ -82,15 +82,15 @@ def matchup(agent1, agent2, rounds=10):
         elif game_result == 0:
             draw += 1
     
-    agent1.win += agent1_w
-    agent1.loss += agent2_w
-    agent1.draw += draw
+    # agent1.win += agent1_w
+    # agent1.loss += agent2_w
+    # agent1.draw += draw
 
-    agent2.win += agent2_w
-    agent2.loss += agent1_w
-    agent2.draw += draw
+    # agent2.win += agent2_w
+    # agent2.loss += agent1_w
+    # agent2.draw += draw
 
-    # return ((agent1.s_depth, agent1_w), (agent2.s_depth, agent2_w), draw)
+    return ((id(agent1), agent1_w), (id(agent2), agent2_w), draw)
 
 def matchup_mp(agent1, agent2, rounds=10, process_num=1):
     """multiprocess version of matchup()

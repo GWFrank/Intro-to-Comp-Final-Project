@@ -1,16 +1,17 @@
 import os
 import neat
+import multiprocessing as mp
 
 from agent.GWFrank_func.match_agents import matchup, matchup_mp, playgame
 from agent.GWFrank_func.test_agent_class import MinimaxTestAgent, LittleRandomTestAgent, RandomTestAgent, NEATAgent
 from agent.GWFrank_func.eval_funcs import posEval, posEvalEndgameVariation
 
 # target_agent = MinimaxTestAgent(posEvalEndgameVariation, 2)
-target_agent = LittleRandomTestAgent(posEvalEndgameVariation, 2, 1/32)
+# target_agent = LittleRandomTestAgent(posEvalEndgameVariation, 2, 1/32)
 # target_agent = RandomTestAgent()
 
 generation = 0
-process_num = 10
+process_num = 2
 
 def eval_genomes(genome, config):
     global generation
@@ -27,10 +28,34 @@ def eval_genomes(genome, config):
         agents.append(NEATAgent(network, 1, generation))
         ge.append(g)
     
+    records = dict()
+
+    pool = mp.Pool(process_num)
+    args = []
+
+    for x, agent_1 in enumerate(agents):
+        records[id(agent_1)] = 0
+        for y, agent_2 in enumerate(agents):
+            if x >= y:
+                continue
+            args.append((agent_1, agent_2, 1))
+
+    results = pool.starmap(matchup, args)
+    pool.close()
+    pool.join()
+
+    for r in results:
+        records[r[0][0]] += 3*r[0][1] + r[2][0]
+        records[r[1][0]] += 3*r[1][1] + r[2][0]
+
     for idx, agent in enumerate(agents):
-        win_rate = matchup_mp(agent, target_agent, 50, process_num)
-        ge[idx].fitness = 2*(win_rate-0.5)
-        print(f"{idx:2} win rate: {win_rate} | fitness: {2*(win_rate-0.5)}")
+        point = records[id(agent)]
+        ge[idx].fitness = point
+
+    # for idx, agent in enumerate(agents):
+    #     win_rate = matchup_mp(agent, target_agent, 50, process_num)
+    #     ge[idx].fitness = 2*(win_rate-0.5)
+    #     print(f"{idx:2} win rate: {win_rate} | fitness: {2*(win_rate-0.5)}")
     #     print(networks[idx])
     # print("="*20)
 
