@@ -1,7 +1,3 @@
----
-tags: Intro_to_Comp
----
-
 <font face="Dejavu Sans"/>
 
 # ItC HW7 Report
@@ -54,39 +50,41 @@ tags: Intro_to_Comp
 - [A Genetic Algorithm to Improve an Othello Program](https://reurl.cc/9XYxvn)
 
 ### 實作方法
-- Case A : Mini-Max + NN
-  - 本質上就是minimax，用神經網路做evaluate function
-- Case B : DL
-  - 直接用不同策略的玩家對抗
-- Case C : Mini-Max
+
+- A : Mini-Max
   - 只有minimax，evaluate function直接寫死
   - evaluate function:
-    - posEval: 直接一個每一格的價值表去加總
-    - posEvalEndgameVariation: 在棋盤只剩下幾格時會用棋子數做計算，捨棄價值表
+    - `posEval`: 直接一個每一格的價值表去加總
+    - `posEvalEndgameVariation`: 在棋盤只剩下幾格時會用棋子數做計算，捨棄價值表
+
+- B : Mini-Max + NN
+  - 本質上就是minimax，用神經網路做evaluate function
+- C : DL
+  - 直接用不同策略的玩家對抗
 
 ### Agents
 - `BetterRandomAgent`
   - Rule: 從所有可以下的地方隨機選一個
   - 節省測試時間用
 - `BasicMinimaxAgent`
-  - Rule: Minimax with 查表的evaluation，搜尋$d$層
-  - Parameters: $d=5$
+  - Rule: Minimax with 查表的evaluation，搜尋`d`層
+  - Parameters: `d=5`
 - `LittleRandomAgent`
-  - Rule: 每輪有機率$p$會是隨機下，$1-p$機率是走Minimax，搜尋$d$層
-  - Parameters: $p=1/32$, $d=5$
+  - Rule: 每輪有機率`p`會是隨機下，`1-p`機率是走Minimax，搜尋`d`層
+  - Parameters: `p=1/32`, `d=5`
 
-### Some Datas
+### Some Data
 
-#### BasicMinimaxAgent (goes first) vs BetterRandomAgent
-Depth        |     1 |     2 |     3 |     4 |     5 |     6 |
------------- | -----:| -----:| -----:| -----:| -----:| -----:|
-Games        |  5000 |  5000 |  5000 |  5000 |  5000 |  2000 |
-Win%         |  .878 |  .880 |  .883 |  .902 |  .911 |  .858 |
-Sigma        | .0046 | .0046 | .0046 | .0042 | .0040 | .0078 |
-Win% - Sigma |  .873 |  .875 |  .878 |  .898 |  .907 |  .850 |
-Win% + Sigma |  .883 |  .885 |  .887 |  .906 |  .915 |  .866 |
+#### `BasicMinimaxAgent` (goes first) vs `BetterRandomAgent`
+ Depth        |     1 |     2 |     3 |     4 |     5 |     6 
+ ------------ | ----: | ----: | ----: | ----: | ----: | ----: | ----:
+ Games        |  5000 |  5000 |  5000 |  5000 |  5000 |  2000
+ Win%         |  .878 |  .880 |  .883 |  .902 |  .911 |  .858
+ Sigma        | .0046 | .0046 | .0046 | .0042 | .0040 | .0078
+ Win% - Sigma |  .873 |  .875 |  .878 |  .898 |  .907 |  .850
+ Win% + Sigma |  .883 |  .885 |  .887 |  .906 |  .915 |  .866
 - 做5層搜尋似乎有最好的表現，且運行時間夠快(sub-5, Ryzen 3600 @ Linux)
 - 預留時間給後面要加的feature
 
-#### LittleRandomAgent vs BasicMinimaxAgent
+#### `LittleRandomAgent` vs `BasicMinimaxAgent`
 
