@@ -1,9 +1,12 @@
 import random
-import pygame
 import sys
+import pickle
+
+# import neat
+import pygame
 from pygame.constants import MOUSEBUTTONDOWN, MOUSEMOTION
 
-from agent.GWFrank_func.minimax import minimax
+from agent.GWFrank_func.minimax import minimax, minimax_adj
 from agent.GWFrank_func.random_move import randomMove
 
 class BaseAgent():
@@ -99,7 +102,32 @@ class LittleRandomAgent(BaseAgent):
         y = self.row_offset + (mv//8) * self.block_len
         return (x, y), pygame.USEREVENT
 
-class MyAgent(BasicMinimaxAgent):
+with open("agent/GWFrank_func/best_trained_with_randomagent.pickle", "rb") as f:
+    neat_network = pickle.load(f)
+
+class NEATAgent(BaseAgent):
+    def eval(self, obs):
+        global neat_network
+        return neat_network.activate(tuple(obs))[0]
+
+    def step(self, reward, obs):
+        obs = list(obs.values())
+        if self.color == "black":
+            c = -1
+        else:
+            c = 1
+        
+        depth = 1
+        
+        # mv, _ = minimax(obs, c, depth, -float('inf'), float('inf'))
+        mv, _ = minimax_adj(obs, c, depth, -float('inf'), float('inf'), self.eval)
+
+        x = self.col_offset + (mv%8)  * self.block_len
+        y = self.row_offset + (mv//8) * self.block_len
+        return (x, y), pygame.USEREVENT
+
+
+class MyAgent(LittleRandomAgent):
     pass
     # what are you doing step function?
     # def step(self, reward, obs):
