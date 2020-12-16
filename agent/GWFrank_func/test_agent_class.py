@@ -15,22 +15,18 @@ class NEATAgent(BasicTestAgent):
         self.nn = nn
         self.s_depth = s_depth
         self.gen = gen
+        self.rule = "NEAT"
     
     def eval(self, obs):
         return self.nn.activate(tuple(obs))[0]
     
     def play(self, obs):
-        # p = 0.2**self.gen
-        # rand_p = random()
-        # if rand_p > p:
-        #     mv, _ = minimax_adj(obs, self.color, self.s_depth
-        #                         , -float("inf"), float("inf"), self.eval)
-        # else:
-        #     mv = randomMove(obs, self.color)
         mv, _ = minimax_adj(obs, self.color, self.s_depth
                             , -float("inf"), float("inf"), self.eval)
-
         return mv
+    
+    def agent_name(self):
+        return f"{self.rule} agent"
 
 class RandomTestAgent(BasicTestAgent):
     def __init__(self):

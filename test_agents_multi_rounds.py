@@ -1,25 +1,31 @@
 import os
 import time
+import pickle
 
 from agent.GWFrank_func.match_agents import matchup, matchup_mp, playgame
-from agent.GWFrank_func.test_agent_class import MinimaxTestAgent, LittleRandomTestAgent, RandomTestAgent
+from agent.GWFrank_func.test_agent_class import MinimaxTestAgent, LittleRandomTestAgent, RandomTestAgent, NEATAgent
 from agent.GWFrank_func.eval_funcs import posEval, posEvalEndgameVariation
+
+nn_file_path = "agent/GWFrank_func/best_trained_with_randomagent.pickle"
+with open(nn_file_path, "rb") as f:
+    nn = pickle.load(f)
 
 if __name__ == "__main__": # Don't delete this line, it's needed for mp to work
     start = time.time() # timer
     rounds = 50
     depth = 4
-    # core_cnt = os.cpu_count()//2
-    core_cnt = 10
+    core_cnt = os.cpu_count()//2
+    # core_cnt = 2
     
     agents = [
               LittleRandomTestAgent(posEvalEndgameVariation, depth, 0.03),
               MinimaxTestAgent(posEvalEndgameVariation, depth),
               RandomTestAgent(),
+              NEATAgent(nn, depth, 1)
              ]
     agent_num = 2
     agent1 = agents[0]
-    agent2 = agents[2]
+    agent2 = agents[3]
 
     matchup_mp(agent1, agent2, rounds, core_cnt)
     # matchup(agent1, agent2, rounds)
