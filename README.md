@@ -1,5 +1,3 @@
-<font face="Dejavu Sans"/>
-
 # ItC HW7 Report
 
 ## A Reversi AI
@@ -49,7 +47,7 @@
 - [Reinforcement Learning and its Application to Othello](https://reurl.cc/d5jLQ6)
 - [A Genetic Algorithm to Improve an Othello Program](https://reurl.cc/9XYxvn)
 
-### 實作方法
+### Implementation
 
 - A : Mini-Max
   - 只有minimax，evaluate function直接寫死
@@ -67,24 +65,44 @@
   - Rule: 從所有可以下的地方隨機選一個
   - 節省測試時間用
 - `BasicMinimaxAgent`
-  - Rule: Minimax with 查表的evaluation，搜尋`d`層
-  - Parameters: `d=5`
+  - Rule: Minimax + 查表的evaluation，搜尋`d`層
+  - Parameters: `d=5`, `eval_func=posEvalEndgameVariation`
 - `LittleRandomAgent`
   - Rule: 每輪有機率`p`會是隨機下，`1-p`機率是走Minimax，搜尋`d`層
-  - Parameters: `p=1/32`, `d=5`
+  - Parameters: `p=0.02`, `d=5`, `eval_func=posEvalEndgameVariation`
+- `NEATAgent`
+  - Rule: Minimax + 神經網路做的evaluation，搜尋`d`層
+  - Parameters: `d=?`, `eval_func=posEvalEndgameVariation`
 
-### Some Data
+### Test Data
 
-#### `BasicMinimaxAgent` (goes first) vs `BetterRandomAgent`
+#### `BasicMinimaxAgent` (goes first) vs `RandomAgent`
  Depth        |     1 |     2 |     3 |     4 |     5 |     6 
  ------------ | ----: | ----: | ----: | ----: | ----: | ----:
  Games        |  5000 |  5000 |  5000 |  5000 |  5000 |  2000
- Win%         |  .878 |  .880 |  .883 |  .902 |  .911 |  .858
- Sigma        | .0046 | .0046 | .0046 | .0042 | .0040 | .0078
- Win% - Sigma |  .873 |  .875 |  .878 |  .898 |  .907 |  .850
- Win% + Sigma |  .883 |  .885 |  .887 |  .906 |  .915 |  .866
-- 做5層搜尋似乎有最好的表現，且運行時間夠快(sub-5, Ryzen 3600 @ Linux)
-- 預留時間給後面要加的feature
+ Wins | 4404 | 4689 | 4841 | 4921 | 4954 | 
+ Win%         | .881 | .938 | .968 | .984 | .991 |  
+ Sigma        | .0046 | .0034 | .0025 | .0018 | .0014 |  
+ Win% - Sigma | .876 | .934 | .966 | .982 | .989 |  
+ Win% + Sigma | .885 | .941 | .971 | .986 | .992 |  
+#### `LittleRandomAgent` (goes first) vs `RandomAgent`
 
-#### `LittleRandomAgent` vs `BasicMinimaxAgent`
+| Depth        |     1 |     2 |     3 |     4 |     5 |    6 |
+| ------------ | ----: | ----: | ----: | ----: | ----: | ---: |
+| Games        |  5000 |  5000 |  5000 |  5000 |  5000 | 2000 |
+| Wins         |  4446 |  4640 |  4818 |  4889 |  4951 |      |
+| Win%         |  .889 |  .928 |  .964 |  .978 |  .990 |      |
+| Sigma        | .0044 | .0037 | .0026 | .0021 | .0014 |      |
+| Win% - Sigma |  .885 |  .924 |  .961 |  .976 |  .989 |      |
+| Win% + Sigma |  .894 |  .932 |  .966 |  .980 |  .992 |      |
+
+#### `NEATAgent` (goes first) vs `RandomAgent`
+ Depth        |     1 |     2 |     3 |     4 |     5 |     6 
+ ------------ | ----: | ----: | ----: | ----: | ----: | ----:
+ Games        | 5000 |  5000 |  5000 |  5000 |  5000 |  2000
+ Wins        | 4423 | 4659 | 4846 | 4926 | 4969 |  
+ Win% | .885 | .932 | .969 | .985 | .994 | 
+ Sigma        | .0045 | .0036 | .0024 | .0017 | .0011 |  
+ Win% - Sigma | .880 | .928 | .967 | .983 | .993 |  
+ Win% + Sigma | .889 | .935 | .972 | .987 | .995 |  
 
