@@ -12,10 +12,10 @@ with open(nn_file_path, "rb") as f:
 
 if __name__ == "__main__": # Don't delete this line, it's needed for mp to work
     start = time.time() # timer
-    rounds = 50
+    rounds = 10
     depth = 4
-    core_cnt = os.cpu_count()//2
-    # core_cnt = 2
+    # core_cnt = os.cpu_count()//2
+    core_cnt = 1
     
     agents = [
               LittleRandomTestAgent(posEvalEndgameVariation, depth, 0.03),
@@ -24,14 +24,14 @@ if __name__ == "__main__": # Don't delete this line, it's needed for mp to work
               NEATAgent(nn, depth, 1)
              ]
     agent_num = 2
-    agent1 = agents[0]
+    agent1 = agents[2]
     agent2 = agents[3]
 
     matchup_mp(agent1, agent2, rounds, core_cnt)
     # matchup(agent1, agent2, rounds)
 
     print("="*20)
-    print(f"In {rounds*2} games...")
+    # print(f"In {rounds*2} games...")
     for a in [agent1, agent2]:
         W, L, D = a.win, a.loss, a.draw
         name = a.agent_name()

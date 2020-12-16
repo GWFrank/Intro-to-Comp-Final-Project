@@ -125,21 +125,21 @@ def matchup_mp(agent1, agent2, rounds=10, process_num=1):
             draw += 1
     
     # agent 2 go first as black
-    pool = mp.Pool(process_num)
+    # pool = mp.Pool(process_num)
     
-    args = [(agent2, agent1) for _ in range(rounds)]
-    game_results = pool.starmap(playgame, args)
+    # args = [(agent2, agent1) for _ in range(rounds)]
+    # game_results = pool.starmap(playgame, args)
 
-    pool.close()
-    pool.join()
+    # pool.close()
+    # pool.join()
     
-    for r in game_results:
-        if r > 0:
-            agent1_w += 1
-        elif r < 0:
-            agent2_w += 1
-        elif r == 0:
-            draw += 1
+    # for r in game_results:
+    #     if r > 0:
+    #         agent1_w += 1
+    #     elif r < 0:
+    #         agent2_w += 1
+    #     elif r == 0:
+    #         draw += 1
     
     agent1.win += agent1_w
     agent1.loss += agent2_w
