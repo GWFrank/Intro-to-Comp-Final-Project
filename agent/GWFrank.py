@@ -2,12 +2,12 @@ import random
 import sys
 import pickle
 
-# import neat
 import pygame
 from pygame.constants import MOUSEBUTTONDOWN, MOUSEMOTION
 
 from agent.GWFrank_func.minimax import minimax, minimax_adj
 from agent.GWFrank_func.random_move import randomMove
+from agent.GWFrank_func.eval_funcs import posEval, posEvalEndgameVariation
 
 class BaseAgent():
     def __init__(self, color = "black", rows_n = 8, cols_n = 8, width = 600, height = 600):
@@ -65,36 +65,48 @@ class BetterRandomAgent(BaseAgent):
         y = self.row_offset + (mv//8) * self.block_len
         return (x, y), pygame.USEREVENT
 
+# =======================================================
+with open("agent/GWFrank_func/best_trained_with_randomagent.pickle", "rb") as f:
+    NN = pickle.load(f)
+
+DEPTH = 4
+RANDOM_STEPS = 4
+RANDOM_PROB = 0.03
+# =======================================================
+
 class BasicMinimaxAgent(BaseAgent):
     def step(self, reward, obs):
+        global DEPTH, RANDOM_STEPS, RANDOM_PROB
         obs = list(obs.values())
         if self.color == "black":
             c = -1
         else:
             c = 1
         
-        depth = 5
-        
-        mv, _ = minimax(obs, c, depth, -float('inf'), float('inf'))
+        if (64-obs.count(0))//2 < RANDOM_STEPS:
+            mv = randomMove(obs, c)
+        else:
+            mv, _ = minimax_adj(obs, c, DEPTH
+                                , -float('inf'), float('inf'), posEvalEndgameVariation)
 
         x = self.col_offset + (mv%8)  * self.block_len
         y = self.row_offset + (mv//8) * self.block_len
         return (x, y), pygame.USEREVENT
 
+
 class LittleRandomAgent(BaseAgent):
     def step(self, reward, obs):
+        global DEPTH, RANDOM_STEPS, RANDOM_PROB
         obs = list(obs.values())
         if self.color == "black":
             c = -1
         else:
             c = 1
         
-        depth = 5
-        move_random_prob = 3*10**(-2)
-        
         p = random.random()
-        if p > move_random_prob:
-            mv, _ = minimax(obs, c, depth, -float('inf'), float('inf'))
+        if p > RANDOM_PROB:
+            mv, _ = minimax_adj(obs, c, DEPTH
+                                , -float('inf'), float('inf'), posEvalEndgameVariation)
         else:
             mv = randomMove(obs, c)
         
@@ -102,25 +114,24 @@ class LittleRandomAgent(BaseAgent):
         y = self.row_offset + (mv//8) * self.block_len
         return (x, y), pygame.USEREVENT
 
-with open("agent/GWFrank_func/best_trained_with_randomagent.pickle", "rb") as f:
-    neat_network = pickle.load(f)
 
 class NEATAgent(BaseAgent):
     def eval(self, obs):
-        global neat_network
-        return neat_network.activate(tuple(obs))[0]
+        global NN
+        return NN.activate(tuple(obs))[0]
 
     def step(self, reward, obs):
+        global DEPTH, RANDOM_STEPS, RANDOM_PROB
         obs = list(obs.values())
         if self.color == "black":
             c = -1
         else:
             c = 1
         
-        depth = 1
-        
-        # mv, _ = minimax(obs, c, depth, -float('inf'), float('inf'))
-        mv, _ = minimax_adj(obs, c, depth, -float('inf'), float('inf'), self.eval)
+        if (64-obs.count(0))//2 < RANDOM_STEPS:
+            mv = randomMove(obs, c)
+        else:
+            mv, _ = minimax_adj(obs, c, DEPTH, -float('inf'), float('inf'), self.eval)
 
         x = self.col_offset + (mv%8)  * self.block_len
         y = self.row_offset + (mv//8) * self.block_len
@@ -129,18 +140,3 @@ class NEATAgent(BaseAgent):
 
 class MyAgent(LittleRandomAgent):
     pass
-    # what are you doing step function?
-    # def step(self, reward, obs):
-    #     obs = list(obs.values())
-    #     if self.color == "black":
-    #         c = -1
-    #     else:
-    #         c = 1
-        
-    #     depth = 5
-    #     mv, _ = minimax(obs, c, depth, -float('inf'), float('inf'))
-
-    #     x = self.col_offset + (mv%8)  * self.block_len
-    #     y = self.row_offset + (mv//8) * self.block_len
-        
-    #     return (x, y), pygame.USEREVENT

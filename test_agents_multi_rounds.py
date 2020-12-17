@@ -27,8 +27,8 @@ if __name__ == "__main__": # Don't delete this line, it's needed for mp to work
     # start = time.time() # timer
     
     rounds = 50
-    # core_cnt = os.cpu_count()//2
-    core_cnt = 10
+    core_cnt = os.cpu_count()//2
+    # core_cnt = 20
     
     depth = 4
     random_step = 4
