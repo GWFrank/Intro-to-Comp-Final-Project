@@ -37,13 +37,13 @@ def playgame(first_agent, second_agent):
     color = -1
     nomovecount = 0
     while nomovecount <= 2:
-        try:
-            move = agents[color].play(board)
+        move = agents[color].play(board)
+        if move:
             board = makeMove(board, move, color)
             nomovecount = 0
-        except:
+        else:
             nomovecount += 1
-            pass
+        
         color = -color
     
     return sum(board)

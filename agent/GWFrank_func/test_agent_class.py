@@ -1,6 +1,6 @@
 from random import random
 
-from .minimax import minimax_adj
+from .minimax import minimax_adj, minimaxCount
 from .random_move import randomMove
 
 class BasicTestAgent:
@@ -53,5 +53,23 @@ class LittleRandomTestAgent(BasicTestAgent):
             mv = randomMove(obs, self.color)
         return mv
     
+    def agent_name(self):
+        return f"{self.rule} agent @d={self.s_depth}"
+
+
+class MinimaxCountTestAgent(BasicTestAgent):
+    def __init__(self, eval_func, s_depth):
+        super().__init__()
+        self.rule = "pure minimax"
+        self.eval_func = eval_func  # function
+        self.s_depth = s_depth  # int
+        
+    def play(self, obs):
+        
+        mv, _ , count = minimaxCount(obs, self.color, self.s_depth, -
+                            float("inf"), float("inf"))
+        # print(f'Routes counted = {count}')
+        return mv
+
     def agent_name(self):
         return f"{self.rule} agent @d={self.s_depth}"

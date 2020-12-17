@@ -3,4 +3,7 @@ from random import choice
 
 def randomMove(obs, color):
     possible_moves = list(getAvailableSpot(obs, color))
-    return choice(possible_moves)
+    if possible_moves:
+        return choice(possible_moves)
+    else:
+        return None
