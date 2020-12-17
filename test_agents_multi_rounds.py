@@ -29,22 +29,23 @@ if __name__ == "__main__": # Don't delete this line, it's needed for mp to work
     rounds = 50
     core_cnt = os.cpu_count()//2
     # core_cnt = 20
-    
+    balanced = True
+
     depth = 4
     random_step = 4
 
     random_agent = RTA()
     basic_mm_agent = MTA(posEvalEndgameVariation, depth)
     random_mm_agent = LRTA(posEvalEndgameVariation, depth, 0.03)
-    neat_mm_agent = NTA(nn, depth, 1)
+    neat_mm_agent = NTA(nn, depth)
     mod_mm_agent = MMTA(posEvalEndgameVariation, depth, random_step)
-    mod_neat_agent = NMTA(nn, depth, 1, random_step)
+    mod_neat_agent = NMTA(nn, depth, random_step)
 
     agent_num = 2
     agent1 = mod_mm_agent
     agent2 = mod_neat_agent
 
-    matchup_mp(agent1, agent2, rounds, core_cnt, True)
+    matchup_mp(agent1, agent2, rounds, core_cnt, balanced)
 
     print("="*20)
     for a in [agent1, agent2]:
