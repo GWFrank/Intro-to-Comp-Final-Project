@@ -3,20 +3,25 @@ import neat
 import multiprocessing as mp
 import pickle
 
-from agent.GWFrank_func.match_agents import matchup, matchup_mp, playgame
-from agent.GWFrank_func.test_agent_class import MinimaxTestAgent, LittleRandomTestAgent, RandomTestAgent, NEATAgent
+from agent.GWFrank_func.match_agents import matchup_training
+from agent.GWFrank_func.test_agent_class import *
 from agent.GWFrank_func.eval_funcs import posEval, posEvalEndgameVariation
 
-# target_agent = MinimaxTestAgent(posEvalEndgameVariation, 2)
+nn_file_name = "cool_agent.pickle"
+
+target_agent = MinimaxModTestAgent(posEvalEndgameVariation, 2, 4)
 # target_agent = LittleRandomTestAgent(posEvalEndgameVariation, 2, 1/32)
 # target_agent = RandomTestAgent()
 
-generation = 0
-process_num = 2
+# generation = 0
+process_num = 6
+rounds_each_eval = 50
+random_step = 4
+training_gens = 10
 
 def eval_genomes(genome, config):
-    global generation
-    generation += 1
+    # global generation
+    # generation += 1
     
     agents = []
     ge = []
@@ -26,40 +31,25 @@ def eval_genomes(genome, config):
         g.fitness = 0
         network = neat.nn.FeedForwardNetwork.create(g, config)
         networks.append(network)
-        agents.append(NEATAgent(network, 1, generation))
+        agents.append(NEATTrainAgent(network, 1, random_step))
         ge.append(g)
     
-    records = dict()
-
+    # ================================
     pool = mp.Pool(process_num)
+
     args = []
+    for idx, agent in enumerate(agents):
+        args.append((agent, idx, target_agent, rounds_each_eval))
+    
+    game_results = pool.starmap(matchup_training, args)
 
-    for x, agent_1 in enumerate(agents):
-        records[x] = 0
-        for y, agent_2 in enumerate(agents):
-            if x >= y:
-                continue
-            args.append((agent_1, agent_2, x, y, 1))
-
-    results = pool.starmap(matchup, args)
     pool.close()
     pool.join()
+    # ================================
 
-    for r in results:
-        records[r[0][0]] += 3*r[0][1] + r[2]
-        records[r[1][0]] += 3*r[1][1] + r[2]
+    for (idx, win_rate) in game_results:
+        ge[idx].fitness = win_rate
 
-    for idx, agent in enumerate(agents):
-        point = records[idx]
-        ge[idx].fitness = point
-        # print(records[idx])
-
-    # for idx, agent in enumerate(agents):
-    #     win_rate = matchup_mp(agent, target_agent, 50, process_num)
-    #     ge[idx].fitness = 2*(win_rate-0.5)
-    #     print(f"{idx:2} win rate: {win_rate} | fitness: {2*(win_rate-0.5)}")
-    #     print(networks[idx])
-    # print("="*20)
 
 
 
@@ -74,11 +64,12 @@ def run(config_path):
     stats = neat.StatisticsReporter()
     p.add_reporter(stats)
 
-    winner = p.run(eval_genomes, 10)
+    winner = p.run(eval_genomes, training_gens)
+
     print(f'\nBest genome:\n{winner}')
 
     network = neat.nn.FeedForwardNetwork.create(winner, config)
-    pickle.dump(network,open("best.pickle", "wb"))
+    pickle.dump(network,open(nn_file_name, "wb"))
 
 
 if __name__ == "__main__":

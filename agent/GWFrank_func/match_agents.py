@@ -41,7 +41,7 @@ def playgame(first_agent, second_agent):
         if move:
             board = makeMove(board, move, color)
             nomovecount = 0
-            printBoard(board)
+            # printBoard(board)
         else:
             nomovecount += 1
         
@@ -151,14 +151,34 @@ def matchup_mp(agent1, agent2, rounds=10, process_num=1, balanced=True):
     agent2.loss += agent1_w
     agent2.draw += draw
 
-    # empty_board = [ 0,  0,  0,  0,  0,  0,  0,  0,
-    #                 0,  0,  0,  0,  0,  0,  0,  0,
-    #                 0,  0,  0,  0,  0,  0,  0,  0,
-    #                 0,  0,  0,  1, -1,  0,  0,  0,
-    #                 0,  0,  0, -1,  1,  0,  0,  0,
-    #                 0,  0,  0,  0,  0,  0,  0,  0,
-    #                 0,  0,  0,  0,  0,  0,  0,  0,
-    #                 0,  0,  0,  0,  0,  0,  0,  0 ]
-    # print(agent1.eval(empty_board))
-    # print(f"{id(agent1)} {id(agent2)}")
-    return agent1_w/(rounds*2)
+    tot_rounds = rounds*2 if balanced else rounds
+    return agent1_w/tot_rounds
+
+
+def matchup_training(training_agent, training_id, target_agent, rounds=10):
+    training_w = 0
+    target_w = 0
+    draw = 0
+    
+    # agent 1 go first as black
+    for _ in range(rounds):
+        game_result = playgame(training_agent, target_agent)
+        if game_result > 0:
+            target_w += 1
+        elif game_result < 0:
+            training_w += 1
+        elif game_result == 0:
+            draw += 1
+    
+    # agent 2 go first as black
+    for _ in range(rounds):
+        game_result = playgame(target_agent, training_agent)
+        if game_result > 0:
+            training_w += 1
+        elif game_result < 0:
+            target_w += 1
+        elif game_result == 0:
+            draw += 1
+    
+    win_rate = (3*training_w + draw) / (3*2*rounds)
+    return (training_id, win_rate) 
