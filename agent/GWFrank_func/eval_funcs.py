@@ -84,7 +84,9 @@ def enhancedPosEval(obs, color):
         valueMap[7][6] = 0
         valueMap[6][6] = 0
         valueMap[6][7] = 0
-        
+
+    # print( valueMap )        
+
     for i in range(8):
         for j in range(8):
             # static score
@@ -134,4 +136,19 @@ def enhancedPosEval(obs, color):
                 bonusRecord[7*8+7-i] = 1
             else: break
 
+    # print(bonusRecord)
+    # print(liberty)
+
     return s + sum(bonusRecord)*26*color - liberty * 104 * color
+
+if __name__ == "__main__":
+    board = [ 0, 0, 0, 0, 0, 0, 0, 1,
+              0, 0, 0, 0, 0, 0, 0, 1,
+              0, 0, 0, 0, 0, 0, 0, 1,
+              0, 0, 0, 1,-1, 0, 0,-1,
+              0, 0, 0,-1, 1, 0, 0, 1,
+              0, 0, 0, 0, 0, 0, 0, 0,
+              0, 0, 0, 0, 0, 0, 0, 0,
+              0, 0, 0, 0, 0, 0, 0, 0]
+    
+    print(enhancedPosEval(board, 1))
