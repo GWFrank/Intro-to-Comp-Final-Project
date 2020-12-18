@@ -138,5 +138,5 @@ class NEATAgent(BaseAgent):
         return (x, y), pygame.USEREVENT
 
 
-class MyAgent(LittleRandomAgent):
+class MyAgent(NEATAgent):
     pass
