@@ -37,7 +37,7 @@
 - `topic-agent-basic` 在做agent要用的基本function
 - `bugfix-typo` 用來修正打字錯誤
 - `topic-2d-to-1d` 在把function間溝通用的index&list改成1d
-- `topic-randomly-move` 讓agent有小機率會亂下一步（尚在測試中）
+- `topic-randomly-move` 讓agent有小機率會亂下一步
 - `topic-zobrist-hash` 實做zobrist hash，用來hash盤面（還沒用到）
 - `topic-agent-randomness` 處理不同盤面相同分數情況
 
@@ -106,8 +106,3 @@
  Win% - Sigma | .880 | .928 | .967 | .983 | .993 | .992 
  Win% + Sigma | .889 | .935 | .972 | .987 | .995 | .995 
 
-Random Mod
-
-basic_minimax vs neat_minimax
-
-NEAT - Basic - Draw : 4965-4786-249
