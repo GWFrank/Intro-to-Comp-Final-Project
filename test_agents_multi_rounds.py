@@ -31,7 +31,7 @@ if __name__ == "__main__": # Don't delete this line, it's needed for mp to work
     # core_cnt = 20
     balanced = True
 
-    depth = 4
+    depth = 5
     random_step = 4
 
     random_agent = RTA()
