@@ -55,17 +55,18 @@ def posEval(obs):
             s += valueMap[i][j] * obs[i*8+j]
     return s+random()
 
-def enhancedPosEval(obs):
-    valueMap = [[100, -20, 10, 5, 5, 10, -20, 100],
-                [-20, -50, -2, -2, -2, -2, -50, -20],
-                [10, -2, -1, -1, -1, -1, -2, 10],
-                [5, -2, -1, -1, -1, -1, -2, 5],
-                [5, -2, -1, -1, -1, -1, -2, 5],
-                [10, -2, -1, -1, -1, -1, -2, 10],
-                [-20, -50, -2, -2, -2, -2, -50, -20],
-                [100, -20, 10, 5, 5, 10, -20, 100]]
+def enhancedPosEval(obs, color):
+    valueMap = [[500, -86, 96, 26, 26, 96, -86, 500],
+                [-86, -1219, -6, 0, 0, -6, -1219, -86],
+                [96, -6, 52, 15, 15, 52, -6, 96],
+                [26, 0, 15, -17, -17, 15, 0, 26],
+                [26, 0, 15, -17, -17, 15, 0, 26],
+                [96, -6, 52, 15, 15, 52, -6, 96],
+                [-86, -1219, -6, 0, 0, -6, -1219, -86],
+                [500, -86, 96, 26, 26, 96, -86, 500]]
     s = 0
     liberty = 0
+    # change tiles around corner to 0 if corner is taken
     direct = [(1, 1), (1, 0), (1, -1), (0, -1), (-1, -1), (-1, 0), (-1, 1)]
     if obs[0][0]:
         valueMap[0][1] = 0
@@ -95,5 +96,42 @@ def enhancedPosEval(obs):
                         liberty += obs[i+d[0]][j+d[1]]
     
     # TODO: edge/corner bonus
+    bonusRecord = [[0]*8 for _ in range(8)]
+    if obs[0][0] == color:
+        for i in range(8): # right
+            if obs[i][0] == color:
+                bonusRecord[i][0] = 1
+            else: break
+        for i in range(8): # down
+            if obs[0][i] == color:
+                bonusRecord[0][i] = 1
+            else: break
+    if obs[0][7] == color:
+        for i in range(8): # right
+            if obs[i][7] == color:
+                bonusRecord[i][7] = 1
+            else: break
+        for i in range(8): # up
+            if obs[0][7-i] == color:
+                bonusRecord[0][7-i] = 1
+            else: break
+    if obs[7][0] == color:
+        for i in range(8): # left
+            if obs[7-i][0] == color:
+                bonusRecord[7-i][0] = 1
+            else: break
+        for i in range(8): # down
+            if obs[7][i] == color:
+                bonusRecord[7][i] = 1
+            else: break
+    if obs[7][7] == color:
+        for i in range(8): # left
+            if obs[7-i][7] == color:
+                bonusRecord[7-i][7] = 1
+            else: break
+        for i in range(8): # up
+            if obs[7][7-i] == color:
+                bonusRecord[7][7-i] = 1
+            else: break
 
-    return s + bonus*bonusFactor - liberty * libertyFactor
+    return s + sum(bonusRecord)*26*color - liberty * 104 * color

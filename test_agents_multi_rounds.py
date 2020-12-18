@@ -2,8 +2,8 @@ import os
 import time
 
 from agent.GWFrank_func.match_agents import matchup, matchup_mp, playgame
-from agent.GWFrank_func.test_agent_class import MinimaxTestAgent, LittleRandomTestAgent, RandomTestAgent
-from agent.GWFrank_func.eval_funcs import posEval, posEvalEndgameVariation
+from agent.GWFrank_func.test_agent_class import MinimaxTestAgent, LittleRandomTestAgent, RandomTestAgent, PaperTestAgent
+from agent.GWFrank_func.eval_funcs import posEval, posEvalEndgameVariation, enhancedPosEval
 
 if __name__ == "__main__": # Don't delete this line, it's needed for mp to work
     # start = time.time() # timer
@@ -16,10 +16,11 @@ if __name__ == "__main__": # Don't delete this line, it's needed for mp to work
               LittleRandomTestAgent(posEvalEndgameVariation, depth, 0.03),
               MinimaxTestAgent(posEvalEndgameVariation, depth),
               RandomTestAgent(),
+              PaperTestAgent(enhancedPosEval, depth)
              ]
     agent_num = 2
-    agent1 = agents[0]
-    agent2 = agents[2]
+    agent1 = agents[2]
+    agent2 = agents[3]
 
     matchup_mp(agent1, agent2, rounds, core_cnt)
     # matchup(agent1, agent2, rounds)
