@@ -17,6 +17,7 @@ MMTA = MinimaxModTestAgent
 NTA = NEATTestAgent
 NMTA = NEATModTestAgent
 MCTA = MinimaxCountTestAgent
+PTA = PaperTestAgent
 
 nn_file_path = "agent/GWFrank_func/best_trained_with_randomagent.pickle"
 with open(nn_file_path, "rb") as f:
@@ -26,7 +27,7 @@ with open(nn_file_path, "rb") as f:
 if __name__ == "__main__": # Don't delete this line, it's needed for mp to work
     # start = time.time() # timer
     
-    rounds = 50
+    rounds = 1
     core_cnt = os.cpu_count()//2
     # core_cnt = 20
     balanced = True
@@ -41,12 +42,14 @@ if __name__ == "__main__": # Don't delete this line, it's needed for mp to work
     mod_mm_agent = MMTA(posEvalEndgameVariation, depth, random_step)
     mod_neat_agent = NMTA(nn, depth, random_step)
     mm_cnt_agent = MCTA(posEvalEndgameVariation, depth)
+    paper_mm_agent = PTA(enhancedPosEval, depth)
 
     
-    agent1 = mod_mm_agent
-    agent2 = mod_neat_agent
+    agent1 = random_agent
+    agent2 = paper_mm_agent
 
     matchup_mp(agent1, agent2, rounds, core_cnt, balanced)
+    # matchup(agent1, agent2, rounds)
 
     print("="*20)
     for a in [agent1, agent2]:

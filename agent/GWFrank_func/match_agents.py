@@ -41,6 +41,7 @@ def playgame(first_agent, second_agent):
         if move:
             board = makeMove(board, move, color)
             nomovecount = 0
+            printBoard(board)
         else:
             nomovecount += 1
         
@@ -48,7 +49,7 @@ def playgame(first_agent, second_agent):
     
     return sum(board)
 
-def matchup(agent1, agent2, agent1_id, agent2_id, rounds=10):
+def matchup(agent1, agent2, rounds=10):
     """Let two agents play against each other many times.
     Args:
         agent1
@@ -90,7 +91,7 @@ def matchup(agent1, agent2, agent1_id, agent2_id, rounds=10):
     # agent2.loss += agent1_w
     # agent2.draw += draw
 
-    return ((agent1_id, agent1_w), (agent2_id, agent2_w), draw)
+    # return ((agent1_id, agent1_w), (agent2_id, agent2_w), draw)
 
 def matchup_mp(agent1, agent2, rounds=10, process_num=1, balanced=True):
     """multiprocess version of matchup()

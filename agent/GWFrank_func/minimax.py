@@ -162,12 +162,12 @@ def minimax_color(obs, color, depth, alpha, beta, eval_func):
         value = -float('inf')
         bestmove = None
         if len(moves) == 0:  # no move, proceed to other player
-            _, newValue = minimax(obs, -color, depth-1, alpha, beta)
+            _, newValue = minimax_color(obs, -color, depth-1, alpha, beta, eval_func)
             if newValue > value:
                 value = newValue
         for move in moves:
             newBoard = makeMove(obs, move, color)
-            _, newValue = minimax(newBoard, -color, depth-1, alpha, beta)
+            _, newValue = minimax_color(newBoard, -color, depth-1, alpha, beta, eval_func)
             if newValue > value:
                 value = newValue
                 bestmove = move
@@ -179,12 +179,12 @@ def minimax_color(obs, color, depth, alpha, beta, eval_func):
         value = float('inf')
         bestmove = None
         if len(moves) == 0:
-            _, newValue = minimax(obs, -color, depth-1, alpha, beta)
+            _, newValue = minimax_color(obs, -color, depth-1, alpha, beta, eval_func)
             if newValue < value:
                 value = newValue
         for move in moves:
             newBoard = makeMove(obs, move, color)
-            _, newValue = minimax(newBoard, -color, depth-1, alpha, beta)
+            _, newValue = minimax_color(newBoard, -color, depth-1, alpha, beta, eval_func)
             if newValue < value:
                 value = newValue
                 bestmove = move

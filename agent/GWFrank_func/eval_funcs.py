@@ -1,5 +1,5 @@
 from random import random
-def posEvalEndgameVariation(obs, n):
+def posEvalEndgameVariation(obs):
     '''
     input: obs: the board
            n: end game start at n empty spaces left 
@@ -68,19 +68,19 @@ def enhancedPosEval(obs, color):
     liberty = 0
     # change tiles around corner to 0 if corner is taken
     direct = [(1, 1), (1, 0), (1, -1), (0, -1), (-1, -1), (-1, 0), (-1, 1)]
-    if obs[0][0]:
+    if obs[0]:
         valueMap[0][1] = 0
         valueMap[1][1] = 0
         valueMap[1][0] = 0
-    if obs[7][0]:
+    if obs[56]:
         valueMap[7][1] = 0
         valueMap[6][1] = 0
         valueMap[6][0] = 0
-    if obs[0][7]:
+    if obs[7]:
         valueMap[0][6] = 0
         valueMap[1][6] = 0
         valueMap[1][7] = 0
-    if obs[7][7]:
+    if obs[63]:
         valueMap[7][6] = 0
         valueMap[6][6] = 0
         valueMap[6][7] = 0
@@ -90,48 +90,48 @@ def enhancedPosEval(obs, color):
             # static score
             s += valueMap[i][j] * obs[i*8+j]
             # liberty: difference empty space adjacent of two colors
-            if obs[i][j] == 0:
+            if obs[i*8+j] == 0:
                 for d in direct:
                     if 0<=i+d[0]<8 and 0<=j+d[1]<8:
-                        liberty += obs[i+d[0]][j+d[1]]
+                        liberty += obs[ (i+d[0])*8+j+d[1] ]
     
     # TODO: edge/corner bonus
-    bonusRecord = [[0]*8 for _ in range(8)]
-    if obs[0][0] == color:
+    bonusRecord = [0 for _ in range(64)]
+    if obs[0] == color:
         for i in range(8): # right
-            if obs[i][0] == color:
-                bonusRecord[i][0] = 1
+            if obs[i*8] == color:
+                bonusRecord[i*8] = 1
             else: break
         for i in range(8): # down
-            if obs[0][i] == color:
-                bonusRecord[0][i] = 1
+            if obs[i] == color:
+                bonusRecord[i] = 1
             else: break
-    if obs[0][7] == color:
+    if obs[7] == color:
         for i in range(8): # right
-            if obs[i][7] == color:
-                bonusRecord[i][7] = 1
+            if obs[i*8+7] == color:
+                bonusRecord[i*8+7] = 1
             else: break
         for i in range(8): # up
-            if obs[0][7-i] == color:
-                bonusRecord[0][7-i] = 1
+            if obs[7-i] == color:
+                bonusRecord[7-i] = 1
             else: break
-    if obs[7][0] == color:
+    if obs[56] == color:
         for i in range(8): # left
-            if obs[7-i][0] == color:
-                bonusRecord[7-i][0] = 1
+            if obs[(7-i)*8] == color:
+                bonusRecord[(7-i)*8] = 1
             else: break
         for i in range(8): # down
-            if obs[7][i] == color:
-                bonusRecord[7][i] = 1
+            if obs[56+i] == color:
+                bonusRecord[56+i] = 1
             else: break
-    if obs[7][7] == color:
+    if obs[63] == color:
         for i in range(8): # left
-            if obs[7-i][7] == color:
-                bonusRecord[7-i][7] = 1
+            if obs[(7-i)*8+7] == color:
+                bonusRecord[(7-i)*8+7] = 1
             else: break
         for i in range(8): # up
-            if obs[7][7-i] == color:
-                bonusRecord[7][7-i] = 1
+            if obs[7*8+7-i] == color:
+                bonusRecord[7*8+7-i] = 1
             else: break
 
     return s + sum(bonusRecord)*26*color - liberty * 104 * color
