@@ -1,6 +1,6 @@
 from random import random
 
-from .minimax import minimax_adj, minimaxCount
+from .minimax import minimax_adj, minimax_color, minimaxCount
 from .random_move import randomMove
 
 class BasicTestAgent:
@@ -134,3 +134,17 @@ class NEATModTestAgent(BasicTestAgent):
     
     def agent_name(self):
         return f"{self.rule} agent"
+class PaperTestAgent(BasicTestAgent):
+    def __init__(self, eval_func, s_depth):
+        super().__init__()
+        self.rule = "Paper minimax"
+        self.eval_func = eval_func  # function
+        self.s_depth = s_depth  # int
+
+    def play(self, obs):
+        mv, _ = minimax_color(obs, self.color, self.s_depth, -
+                            float("inf"), float("inf"), self.eval_func)
+        return mv
+
+    def agent_name(self):
+        return f"{self.rule} agent @d={self.s_depth}"

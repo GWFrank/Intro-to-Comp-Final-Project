@@ -4,10 +4,10 @@ import pickle
 
 
 from agent.GWFrank_func.match_agents import matchup, matchup_mp, playgame
-from agent.GWFrank_func.test_agent_class import RandomTestAgent, MinimaxCountTestAgent
+from agent.GWFrank_func.test_agent_class import RandomTestAgent, MinimaxCountTestAgent, PaperTestAgent
 from agent.GWFrank_func.test_agent_class import MinimaxTestAgent, LittleRandomTestAgent, MinimaxModTestAgent
 from agent.GWFrank_func.test_agent_class import NEATTestAgent, NEATModTestAgent
-from agent.GWFrank_func.eval_funcs import posEval, posEvalEndgameVariation
+from agent.GWFrank_func.eval_funcs import posEval, posEvalEndgameVariation, enhancedPosEval
 
 
 RTA = RandomTestAgent
