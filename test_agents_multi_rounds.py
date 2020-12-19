@@ -22,12 +22,14 @@ PTA = PaperTestAgent
 nn_file_path = "agent/GWFrank_func/best_trained_with_randomagent.pickle"
 with open(nn_file_path, "rb") as f:
     nn = pickle.load(f)
-
+nn2_file_path = "cool_agent.pickle"
+with open(nn_file_path, "rb") as f:
+    nn2 = pickle.load(f)
 
 if __name__ == "__main__": # Don't delete this line, it's needed for mp to work
     # start = time.time() # timer
     
-    rounds = 1
+    rounds = 10
     core_cnt = os.cpu_count()//2
     # core_cnt = 20
     balanced = True
@@ -38,15 +40,17 @@ if __name__ == "__main__": # Don't delete this line, it's needed for mp to work
     random_agent = RTA()
     basic_mm_agent = MTA(posEvalEndgameVariation, depth)
     random_mm_agent = LRTA(posEvalEndgameVariation, depth, 0.03)
-    neat_mm_agent = NTA(nn, depth)
     mod_mm_agent = MMTA(posEvalEndgameVariation, depth, random_step)
-    mod_neat_agent = NMTA(nn, depth, random_step)
     mm_cnt_agent = MCTA(posEvalEndgameVariation, depth)
+    neat_mm_agent = NTA(nn, depth)
+    mod_neat_agent = NMTA(nn, depth, random_step)
+    neat_mm_agent2 = NTA(nn2, depth)
+    mod_neat_agent2 = NMTA(nn2, depth, random_step)
     paper_mm_agent = PTA(enhancedPosEval, depth)
-
     
-    agent1 = random_agent
-    agent2 = paper_mm_agent
+    
+    agent1 = mod_neat_agent
+    agent2 = mod_neat_agent2
 
     matchup_mp(agent1, agent2, rounds, core_cnt, balanced)
     # matchup(agent1, agent2, rounds)
