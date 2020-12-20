@@ -38,7 +38,7 @@ def playgame(first_agent, second_agent):
     nomovecount = 0
     while nomovecount <= 2:
         move = agents[color].play(board)
-        if move:
+        if move is not None:
             board = makeMove(board, move, color)
             nomovecount = 0
             printBoard(board)
