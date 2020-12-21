@@ -37,13 +37,14 @@ def playgame(first_agent, second_agent):
     color = -1
     nomovecount = 0
     while nomovecount <= 2:
-        try:
-            move = agents[color].play(board)
+        move = agents[color].play(board)
+        if move is not None:
             board = makeMove(board, move, color)
             nomovecount = 0
-        except:
+            printBoard(board)
+        else:
             nomovecount += 1
-            pass
+        
         color = -color
     
     return sum(board)
@@ -82,17 +83,17 @@ def matchup(agent1, agent2, rounds=10):
         elif game_result == 0:
             draw += 1
     
-    agent1.win += agent1_w
-    agent1.loss += agent2_w
-    agent1.draw += draw
+    # agent1.win += agent1_w
+    # agent1.loss += agent2_w
+    # agent1.draw += draw
 
-    agent2.win += agent2_w
-    agent2.loss += agent1_w
-    agent2.draw += draw
+    # agent2.win += agent2_w
+    # agent2.loss += agent1_w
+    # agent2.draw += draw
 
-    # return ((agent1.s_depth, agent1_w), (agent2.s_depth, agent2_w), draw)
+    # return ((agent1_id, agent1_w), (agent2_id, agent2_w), draw)
 
-def matchup_mp(agent1, agent2, rounds=10, process_num=1):
+def matchup_mp(agent1, agent2, rounds=10, process_num=1, balanced=True):
     """multiprocess version of matchup()
     Args:
         agent1
@@ -125,21 +126,22 @@ def matchup_mp(agent1, agent2, rounds=10, process_num=1):
             draw += 1
     
     # agent 2 go first as black
-    pool = mp.Pool(process_num)
-    
-    args = [(agent2, agent1) for _ in range(rounds)]
-    game_results = pool.starmap(playgame, args)
+    if balanced:
+        pool = mp.Pool(process_num)
+        
+        args = [(agent2, agent1) for _ in range(rounds)]
+        game_results = pool.starmap(playgame, args)
 
-    pool.close()
-    pool.join()
-    
-    for r in game_results:
-        if r > 0:
-            agent1_w += 1
-        elif r < 0:
-            agent2_w += 1
-        elif r == 0:
-            draw += 1
+        pool.close()
+        pool.join()
+        
+        for r in game_results:
+            if r > 0:
+                agent1_w += 1
+            elif r < 0:
+                agent2_w += 1
+            elif r == 0:
+                draw += 1
     
     agent1.win += agent1_w
     agent1.loss += agent2_w
@@ -149,4 +151,14 @@ def matchup_mp(agent1, agent2, rounds=10, process_num=1):
     agent2.loss += agent1_w
     agent2.draw += draw
 
-    # return ((agent1.s_depth, agent1_w), (agent2.s_depth, agent2_w), draw)
+    # empty_board = [ 0,  0,  0,  0,  0,  0,  0,  0,
+    #                 0,  0,  0,  0,  0,  0,  0,  0,
+    #                 0,  0,  0,  0,  0,  0,  0,  0,
+    #                 0,  0,  0,  1, -1,  0,  0,  0,
+    #                 0,  0,  0, -1,  1,  0,  0,  0,
+    #                 0,  0,  0,  0,  0,  0,  0,  0,
+    #                 0,  0,  0,  0,  0,  0,  0,  0,
+    #                 0,  0,  0,  0,  0,  0,  0,  0 ]
+    # print(agent1.eval(empty_board))
+    # print(f"{id(agent1)} {id(agent2)}")
+    return agent1_w/(rounds*2)
