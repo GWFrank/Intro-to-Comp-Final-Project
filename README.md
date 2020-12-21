@@ -2,6 +2,12 @@
 
 ## A Reversi AI
 
+### Requirements
+
+Third-party Packages
+
+` pip install neat-python`
+
 ### Team members
 
 - Team leader
@@ -26,7 +32,7 @@
   - [ ] Improve Performence
       - [x] Zobrist Hash
       - [ ] Use hash to lookup
-- [ ] NN evaluate function, trained with GA
+- [ ] NN evaluate function
     - [x] Remake the game without UI
     - [ ] Research popular packages like tensorflow, pytorch, keras
 
@@ -47,7 +53,7 @@
 - [Reinforcement Learning and its Application to Othello](https://reurl.cc/d5jLQ6)
 - [A Genetic Algorithm to Improve an Othello Program](https://reurl.cc/9XYxvn)
 
-### Implementation
+### Possible Implementations
 
 - A : Mini-Max
   - 只有minimax，evaluate function直接寫死
@@ -57,7 +63,7 @@
 
 - B : Mini-Max + NN
   - 本質上就是minimax，用神經網路做evaluate function
-- C : DL
+- C : DL (沒做到)
   - 直接用不同策略的玩家對抗
 
 ### Agents
@@ -73,10 +79,13 @@
 - `NEATAgent`
   - Rule: Minimax + 神經網路做的evaluation，搜尋`d`層
   - Parameters: `d=?`, `eval_func=posEvalEndgameVariation`
+  - Feed Forward Neural Network 用 NEAT 訓練
+- Minor Tweaks
+  - 前2步隨機走，增加遊戲的隨機性
 
 ### Test Data
 
-#### `BasicMinimaxAgent` (goes first) vs `RandomAgent`
+#### `BasicMinimaxAgent` (先手) vs `RandomAgent`
  Depth        |     1 |     2 |     3 |     4 |     5 |     6 
  ------------ | ----: | ----: | ----: | ----: | ----: | ----:
  Games        |  5000 |  5000 |  5000 |  5000 |  5000 |  2000
@@ -85,7 +94,7 @@
  Sigma        | .0046 | .0034 | .0025 | .0018 | .0014 | .0013 
  Win% - Sigma | .876 | .934 | .966 | .982 | .989 | .995 
  Win% + Sigma | .885 | .941 | .971 | .986 | .992 | .998 
-#### `LittleRandomAgent` (goes first) vs `RandomAgent`
+#### `LittleRandomAgent` (先手) vs `RandomAgent`
 
 | Depth        |     1 |     2 |     3 |     4 |     5 |     6 |
 | ------------ | ----: | ----: | ----: | ----: | ----: | ----: |
@@ -96,7 +105,7 @@
 | Win% - Sigma |  .885 |  .924 |  .961 |  .976 |  .989 |  .993 |
 | Win% + Sigma |  .894 |  .932 |  .966 |  .980 |  .992 |  .997 |
 
-#### `NEATAgent` (goes first) vs `RandomAgent`
+#### `NEATAgent` (先手) vs `RandomAgent`
  Depth        |     1 |     2 |     3 |     4 |     5 |     6 
  ------------ | ----: | ----: | ----: | ----: | ----: | ----:
  Games        | 5000 |  5000 |  5000 |  5000 |  5000 |  2000
@@ -106,3 +115,8 @@
  Win% - Sigma | .880 | .928 | .967 | .983 | .993 | .992 
  Win% + Sigma | .889 | .935 | .972 | .987 | .995 | .995 
 
+#### `NEATAgent` vs `BasicMinimaxAgent` (輪流先手)
+
+| NEAT Wins | Basic Minimax Wins | Draw |
+| --------: | -----------------: | ---: |
+|      5002 |               4784 |  214 |

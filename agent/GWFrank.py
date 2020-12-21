@@ -70,7 +70,7 @@ with open("agent/GWFrank_func/best_trained_with_randomagent.pickle", "rb") as f:
     NN = pickle.load(f)
 
 DEPTH = 5
-RANDOM_STEPS = 4
+RANDOM_STEPS = 2
 RANDOM_PROB = 0.03
 # =======================================================
 
