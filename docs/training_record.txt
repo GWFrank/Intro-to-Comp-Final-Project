@@ -1,3 +1,7 @@
+Opponent is RandomAgent.
+High probability of moving randomly at early stage of training.
+
+
 
  ****** Running generation 0 ****** 
 

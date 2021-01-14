@@ -32,9 +32,8 @@ Third-party Packages
   - [ ] Improve Performence
       - [x] Zobrist Hash
       - [ ] Use hash to lookup
-- [ ] NN evaluate function
+- [x] NN evaluate function (v2.0)
     - [x] Remake the game without UI
-    - [ ] Research popular packages like tensorflow, pytorch, keras
 
 ### Current Branches
 - `main` 是正式發行的版本分支
@@ -78,7 +77,7 @@ Third-party Packages
   - Parameters: `p=0.02`, `d=5`, `eval_func=posEvalEndgameVariation`
 - `NEATAgent`
   - Rule: Minimax + 神經網路做的evaluation，搜尋`d`層
-  - Parameters: `d=?`, `eval_func=posEvalEndgameVariation`
+  - Parameters: `d=5`, `eval_func=NeuralNetwork`
   - Feed Forward Neural Network 用 NEAT 訓練
 - Minor Tweaks
   - 前2步隨機走，增加遊戲的隨機性
