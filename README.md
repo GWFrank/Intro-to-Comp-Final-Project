@@ -32,9 +32,8 @@ Third-party Packages
   - [ ] Improve Performence
       - [x] Zobrist Hash
       - [ ] Use hash to lookup
-- [ ] NN evaluate function
+- [x] NN evaluate function (v2.0)
     - [x] Remake the game without UI
-    - [ ] Research popular packages like tensorflow, pytorch, keras
 
 ### Current Branches
 - `main` 是正式發行的版本分支
@@ -78,7 +77,7 @@ Third-party Packages
   - Parameters: `p=0.02`, `d=5`, `eval_func=posEvalEndgameVariation`
 - `NEATAgent`
   - Rule: Minimax + 神經網路做的evaluation，搜尋`d`層
-  - Parameters: `d=?`, `eval_func=posEvalEndgameVariation`
+  - Parameters: `d=5`, `eval_func=NeuralNetwork`
   - Feed Forward Neural Network 用 NEAT 訓練
 - Minor Tweaks
   - 前2步隨機走，增加遊戲的隨機性
@@ -86,14 +85,14 @@ Third-party Packages
 ### Test Data
 
 #### `BasicMinimaxAgent` (先手) vs `RandomAgent`
- Depth        |     1 |     2 |     3 |     4 |     5 |     6 
- ------------ | ----: | ----: | ----: | ----: | ----: | ----:
- Games        |  5000 |  5000 |  5000 |  5000 |  5000 |  2000
- Wins | 4404 | 4689 | 4841 | 4921 | 4954 | 1993 
- Win%         | .881 | .938 | .968 | .984 | .991 | .997 
- Sigma        | .0046 | .0034 | .0025 | .0018 | .0014 | .0013 
- Win% - Sigma | .876 | .934 | .966 | .982 | .989 | .995 
- Win% + Sigma | .885 | .941 | .971 | .986 | .992 | .998 
+| Depth        |     1 |     2 |     3 |     4 |     5 |     6 |
+| ------------ | ----: | ----: | ----: | ----: | ----: | ----: |
+| Games        |  5000 |  5000 |  5000 |  5000 |  5000 |  2000 |
+| Wins         |  4404 |  4689 |  4841 |  4921 |  4954 |  1993 |
+| Win%         |  .881 |  .938 |  .968 |  .984 |  .991 |  .997 |
+| Sigma        | .0046 | .0034 | .0025 | .0018 | .0014 | .0013 |
+| Win% - Sigma |  .876 |  .934 |  .966 |  .982 |  .989 |  .995 |
+| Win% + Sigma |  .885 |  .941 |  .971 |  .986 |  .992 |  .998 |
 #### `LittleRandomAgent` (先手) vs `RandomAgent`
 
 | Depth        |     1 |     2 |     3 |     4 |     5 |     6 |
@@ -106,14 +105,14 @@ Third-party Packages
 | Win% + Sigma |  .894 |  .932 |  .966 |  .980 |  .992 |  .997 |
 
 #### `NEATAgent` (先手) vs `RandomAgent`
- Depth        |     1 |     2 |     3 |     4 |     5 |     6 
- ------------ | ----: | ----: | ----: | ----: | ----: | ----:
- Games        | 5000 |  5000 |  5000 |  5000 |  5000 |  2000
- Wins        | 4423 | 4659 | 4846 | 4926 | 4969 | 1987 
- Win% | .885 | .932 | .969 | .985 | .994 | .994 
- Sigma        | .0045 | .0036 | .0024 | .0017 | .0011 | .0018 
- Win% - Sigma | .880 | .928 | .967 | .983 | .993 | .992 
- Win% + Sigma | .889 | .935 | .972 | .987 | .995 | .995 
+| Depth        |     1 |     2 |     3 |     4 |     5 |     6 |
+| ------------ | ----: | ----: | ----: | ----: | ----: | ----: |
+| Games        |  5000 |  5000 |  5000 |  5000 |  5000 |  2000 |
+| Wins         |  4423 |  4659 |  4846 |  4926 |  4969 |  1987 |
+| Win%         |  .885 |  .932 |  .969 |  .985 |  .994 |  .994 |
+| Sigma        | .0045 | .0036 | .0024 | .0017 | .0011 | .0018 |
+| Win% - Sigma |  .880 |  .928 |  .967 |  .983 |  .993 |  .992 |
+| Win% + Sigma |  .889 |  .935 |  .972 |  .987 |  .995 |  .995 |
 
 #### `NEATAgent` vs `BasicMinimaxAgent` (輪流先手)
 
